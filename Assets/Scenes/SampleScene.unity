@@ -1079,6 +1079,7 @@ MonoBehaviour:
   vampire: {fileID: 0}
   bat: {fileID: 0}
   healthBar: {fileID: 0}
+  turnSpeed: 1000
 --- !u!143 &915200589
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1843,6 +1844,7 @@ MonoBehaviour:
   vampire: {fileID: 915200586}
   bat: {fileID: 419974395}
   healthBar: {fileID: 1618309580}
+  turnSpeed: 0.1
 --- !u!4 &1529314240
 Transform:
   m_ObjectHideFlags: 0

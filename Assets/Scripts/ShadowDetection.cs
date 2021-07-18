@@ -8,7 +8,7 @@ public class ShadowDetection : MonoBehaviour
     private Vector3 lightDirection;
     private int layerMask;
 
-    private PlayerMovement playerController;
+    private PlayerController playerController;
     public float damagePerSecond = 5;
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class ShadowDetection : MonoBehaviour
         layerMask = 1 << 3;    //hard coded  Player layer number=3
         layerMask = ~layerMask;
 
-        playerController = gameObject.GetComponent<PlayerMovement>();
+        playerController = gameObject.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame

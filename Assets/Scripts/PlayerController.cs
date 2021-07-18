@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private Vector3 touchPosition;
     private Vector3 direction;
@@ -17,10 +17,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isVampireForm = true;
 
     private int tapCount=0;           //double tap variables
-    private float doubleTapTimer = 0f, doubleTapWaitTime=0.5f;
+    private float doubleTapTimer = 0f, doubleTapWaitTime=0.2f;
 
     private float maxHP = 100, HP = 100;
     public HealthBar healthBar;
+
+    public float turnSpeed = 0.1f;  //0.1f is the proper speed, could be scaled differently later
     void Start()
     {
         vampire.gameObject.SetActive(true);
@@ -85,21 +87,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.touchCount > 0)
         {
-          
-
             Touch touch = Input.GetTouch(0);
-            touchPosition = touch.position;
-
-            touchPosition.z=Mathf.Sqrt(Mathf.Pow(movementWidthRange / 2,2)- Mathf.Pow(movementWidthRange / 4, 2));
-
-            //touchPosition.z = 2;    //maybe change this value later (experiment)
-            touchPosition = Camera.main.ScreenToWorldPoint(touchPosition);
-            touchPosition.z = 0;
-
-            // myCharacterController.enabled = false;
-            // myCharacterController.transform.position= new Vector3(touchPosition.x, myCharacterController.transform.position.y, myCharacterController.transform.position.z);
-            // myCharacterController.enabled = true;
-            transform.position = new Vector3(touchPosition.x, transform.position.y, transform.position.z);
+            if(touch.phase == TouchPhase.Moved)
+            {
+                transform.position = new Vector3(transform.position.x + (touch.deltaPosition.x* turnSpeed)  * Time.deltaTime, transform.position.y, transform.position.z);
+            }
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z+speed*Time.deltaTime);    //empty game object "Player" moves
