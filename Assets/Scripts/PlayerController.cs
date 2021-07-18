@@ -22,9 +22,13 @@ public class PlayerController : MonoBehaviour
     private float maxHP = 100, HP = 100;
     public HealthBar healthBar;
 
-    public float turnSpeed = 0.1f;  //0.1f is the proper speed, could be scaled differently later
+    public float turnSpeed = 0.15f;  //0.15f is the proper speed, could be scaled differently later
+
+    public bool IsVampireForm { get => isVampireForm; set => isVampireForm = value; }
+
     void Start()
     {
+        myCharacterController = GetComponent<CharacterController>();
         vampire.gameObject.SetActive(true);
         bat.gameObject.SetActive(false);
         vampireCC = vampire.GetComponent<CharacterController>();
@@ -34,6 +38,8 @@ public class PlayerController : MonoBehaviour
         healthBar.SetMaxHealth(maxHP);  //healthbar configuration
     }
 
+    
+
     private void switchCharacter()
     {
         if (isVampireForm)
@@ -41,15 +47,29 @@ public class PlayerController : MonoBehaviour
             vampire.gameObject.SetActive(false);    //switching to bat form
             bat.gameObject.SetActive(true);
             isVampireForm = false;
-            myCharacterController = bat.GetComponent<CharacterController>();
+            deepCopyCharacterController(bat);
+          //  myCharacterController = bat.GetComponent<CharacterController>();
         }
         else
         {
             vampire.gameObject.SetActive(true);
             bat.gameObject.SetActive(false);        //switching to vampire form
             isVampireForm = true;
-            myCharacterController = vampire.GetComponent<CharacterController>();
+            deepCopyCharacterController(vampire);
+            // myCharacterController = vampire.GetComponent<CharacterController>();
         }
+    }
+
+    private void deepCopyCharacterController(GameObject o)
+    {
+        CharacterController cc = o.GetComponent<CharacterController>();
+        myCharacterController.slopeLimit= cc.slopeLimit;
+        myCharacterController.stepOffset = cc.stepOffset;
+        myCharacterController.skinWidth = cc.skinWidth;
+        myCharacterController.minMoveDistance = cc.minMoveDistance;
+        myCharacterController.center = cc.center + new Vector3(0, o.transform.localPosition.y, 0);
+        myCharacterController.radius = cc.radius;
+        myCharacterController.height = cc.height;
     }
 
     private void detectDoubleTap()
@@ -90,11 +110,18 @@ public class PlayerController : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if(touch.phase == TouchPhase.Moved)
             {
-                transform.position = new Vector3(transform.position.x + (touch.deltaPosition.x* turnSpeed)  * Time.deltaTime, transform.position.y, transform.position.z);
+                
+                // myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));
+                  myCharacterController.Move(transform.right*(touch.deltaPosition.x * turnSpeed) * Time.deltaTime);
+                //  myCharacterController.Move(new Vector3(transform.position.x + (touch.deltaPosition.x * turnSpeed) * Time.deltaTime, transform.position.y, transform.position.z));
+              //  myCharacterController.enabled = false;
+              //  transform.position = new Vector3(transform.position.x + (touch.deltaPosition.x* turnSpeed)  * Time.deltaTime, transform.position.y, transform.position.z);
+               // myCharacterController.enabled = true;
             }
         }
-
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z+speed*Time.deltaTime);    //empty game object "Player" moves
+        if(isVampireForm) myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));  //gravity move
+        myCharacterController.Move(transform.forward * speed * Time.deltaTime);
+        //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z+speed*Time.deltaTime);    //empty game object "Player" moves
      //   vampireCC.SimpleMove(new Vector3(0f, 0f, 0f));
      //   vampireCC.Move(transform.forward * speed * Time.deltaTime);
 

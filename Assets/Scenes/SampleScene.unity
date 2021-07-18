@@ -1820,6 +1820,7 @@ GameObject:
   - component: {fileID: 1529314240}
   - component: {fileID: 1529314239}
   - component: {fileID: 1529314241}
+  - component: {fileID: 1529314242}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1844,7 +1845,7 @@ MonoBehaviour:
   vampire: {fileID: 915200586}
   bat: {fileID: 419974395}
   healthBar: {fileID: 1618309580}
-  turnSpeed: 0.1
+  turnSpeed: 0.15
 --- !u!4 &1529314240
 Transform:
   m_ObjectHideFlags: 0
@@ -1875,6 +1876,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directionalLight: {fileID: 705507993}
   damagePerSecond: 5
+--- !u!143 &1529314242
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529314238}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1530742589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2426,6 +2445,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 673307119458166454, guid: aaa840ede3e133c44a0c829e8ba069ff, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3843968791034072266, guid: aaa840ede3e133c44a0c829e8ba069ff, type: 3}
       propertyPath: m_Name
       value: tile

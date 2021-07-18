@@ -23,8 +23,16 @@ public class ShadowDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        bool hit = Physics.Raycast(transform.position, lightDirection, Mathf.Infinity, layerMask);
+        bool hit;
+        if (playerController.IsVampireForm)
+        {
+            hit = Physics.Raycast(playerController.vampire.transform.position, lightDirection, Mathf.Infinity, layerMask);
+        }
+        else
+        {
+            hit = Physics.Raycast(playerController.bat.transform.position, lightDirection, Mathf.Infinity, layerMask);
+        }
+        
 
         if (!hit)
         {
