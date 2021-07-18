@@ -7,12 +7,17 @@ public class ShadowDetection : MonoBehaviour
     public GameObject directionalLight;
     private Vector3 lightDirection;
     private int layerMask;
+
+    private PlayerMovement playerController;
+    public float damagePerSecond = 5;
     // Start is called before the first frame update
     void Start()
     {
         lightDirection = -directionalLight.transform.forward;
         layerMask = 1 << 3;    //hard coded  Player layer number=3
         layerMask = ~layerMask;
+
+        playerController = gameObject.GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -21,6 +26,9 @@ public class ShadowDetection : MonoBehaviour
 
         bool hit = Physics.Raycast(transform.position, lightDirection, Mathf.Infinity, layerMask);
 
-        if (hit) Debug.Log("Player is in shadow!"); else Debug.Log("Player is in sunlight!");
+        if (!hit)
+        {
+            playerController.doDamage(damagePerSecond * Time.deltaTime);
+        }
     }
 }

@@ -18,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
 
     private int tapCount=0;           //double tap variables
     private float doubleTapTimer = 0f, doubleTapWaitTime=0.5f;
+
+    private float maxHP = 100, HP = 100;
+    public HealthBar healthBar;
     void Start()
     {
         vampire.gameObject.SetActive(true);
@@ -25,7 +28,8 @@ public class PlayerMovement : MonoBehaviour
         vampireCC = vampire.GetComponent<CharacterController>();
         batCC= bat.GetComponent<CharacterController>();
         movementWidthRange = tile.transform.localScale.x*0.8f;   //movement width range depends on tile width
-        
+
+        healthBar.SetMaxHealth(maxHP);  //healthbar configuration
     }
 
     private void switchCharacter()
@@ -108,5 +112,11 @@ public class PlayerMovement : MonoBehaviour
 
         // myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));
         // myCharacterController.Move(transform.forward*speed*Time.deltaTime);
+    }
+
+    public void doDamage(float dmg)
+    {
+        HP -= dmg;
+        healthBar.SetHealth(HP);
     }
 }
