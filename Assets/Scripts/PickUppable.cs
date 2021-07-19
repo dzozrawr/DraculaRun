@@ -8,11 +8,10 @@ public class PickUppable : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerController>().IsUmbrellaAvailable=true;
+            other.gameObject.GetComponent<PlayerController>().pickUpUmbrella(); //umbrella becomes available and gains +baseHP
             //effect, could be made abstract in case of multiple power ups
             //play sound maybe
             Destroy(gameObject);
-            Debug.Log(other.gameObject.GetComponent<PlayerController>().IsUmbrellaAvailable);
         }
     }
 }

@@ -6,7 +6,7 @@ public class UmbrellaHP : MonoBehaviour
 {
     // Start is called before the first frame update
     public float baseHP = 10;
-    private float HP;
+    private float HP=0;
 
     private PlayerController playerController;
 
@@ -14,16 +14,28 @@ public class UmbrellaHP : MonoBehaviour
 
     void Start()
     {
-        HP = baseHP;
+       // HP = baseHP;
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         healthBar.SetMaxHealth(baseHP);
+    }
+
+    public void addHP()
+    {
+        HP += baseHP;
+        if (HP > baseHP)
+        {
+            healthBar.SetMaxHealth(HP);
+            healthBar.SetHealth(HP);
+        }
     }
 
     public void doDamage(float dmg)
     {
         HP -= dmg;
         healthBar.SetHealth(HP);
+
+        Debug.Log(HP);
 
         if (HP <= 0)
         {

@@ -139,6 +139,12 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void pickUpUmbrella()
+    {
+        isUmbrellaAvailable = true;
+        playerUmbrella.GetComponent<UmbrellaHP>().addHP();
+    }
+
     public GameObject getPlayerUmbrella()
     {
         return playerUmbrella;
