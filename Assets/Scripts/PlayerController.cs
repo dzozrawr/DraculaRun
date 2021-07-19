@@ -8,9 +8,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     public float speed = 7.0f;
     private CharacterController myCharacterController;
-    private CharacterController vampireCC,batCC;    //CC stands for character controller
     public GameObject tile;
-    private float movementWidthRange;
 
     public GameObject vampire,bat;
 
@@ -26,14 +24,27 @@ public class PlayerController : MonoBehaviour
 
     public bool IsVampireForm { get => isVampireForm; set => isVampireForm = value; }
 
+    private bool isUmbrellaAvailable = false;
+    public bool IsUmbrellaAvailable { get => isUmbrellaAvailable; set => isUmbrellaAvailable = value; }
+
+    private GameObject playerUmbrella;
+
     void Start()
     {
         myCharacterController = GetComponent<CharacterController>();
         vampire.gameObject.SetActive(true);
         bat.gameObject.SetActive(false);
-        vampireCC = vampire.GetComponent<CharacterController>();
-        batCC= bat.GetComponent<CharacterController>();
-        movementWidthRange = tile.transform.localScale.x*0.8f;   //movement width range depends on tile width
+        
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).name.Equals("UmbrellaPlayer"))
+            {
+                playerUmbrella = transform.GetChild(i).gameObject;      //finding the umbrella in children
+                break;
+            }
+        }
+
+        playerUmbrella.SetActive(false);
 
         healthBar.SetMaxHealth(maxHP);  //healthbar configuration
     }
@@ -111,9 +122,9 @@ public class PlayerController : MonoBehaviour
             if(touch.phase == TouchPhase.Moved)
             {
                 
-                // myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));
+                
                   myCharacterController.Move(transform.right*(touch.deltaPosition.x * turnSpeed) * Time.deltaTime);
-                //  myCharacterController.Move(new Vector3(transform.position.x + (touch.deltaPosition.x * turnSpeed) * Time.deltaTime, transform.position.y, transform.position.z));
+               
               //  myCharacterController.enabled = false;
               //  transform.position = new Vector3(transform.position.x + (touch.deltaPosition.x* turnSpeed)  * Time.deltaTime, transform.position.y, transform.position.z);
                // myCharacterController.enabled = true;
@@ -122,16 +133,17 @@ public class PlayerController : MonoBehaviour
         if(isVampireForm) myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));  //gravity move
         myCharacterController.Move(transform.forward * speed * Time.deltaTime);
         //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z+speed*Time.deltaTime);    //empty game object "Player" moves
-     //   vampireCC.SimpleMove(new Vector3(0f, 0f, 0f));
-     //   vampireCC.Move(transform.forward * speed * Time.deltaTime);
-
-     //   batCC.SimpleMove(new Vector3(0f, 0f, 0f));
-     //   batCC.Move(transform.forward * speed * Time.deltaTime);
 
 
-        // myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));
-        // myCharacterController.Move(transform.forward*speed*Time.deltaTime);
+
+
     }
+
+    public GameObject getPlayerUmbrella()
+    {
+        return playerUmbrella;
+    }
+
 
     public void doDamage(float dmg)
     {

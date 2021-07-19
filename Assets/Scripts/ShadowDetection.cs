@@ -26,7 +26,7 @@ public class ShadowDetection : MonoBehaviour
         bool hit;
         if (playerController.IsVampireForm)
         {
-            hit = Physics.Raycast(playerController.vampire.transform.position, lightDirection, Mathf.Infinity, layerMask);
+            hit = Physics.Raycast(playerController.vampire.transform.position, lightDirection, Mathf.Infinity, layerMask);  //casting an infinite ray from player towards the lights direction
         }
         else
         {
@@ -34,9 +34,21 @@ public class ShadowDetection : MonoBehaviour
         }
         
 
-        if (!hit)
+        if (!hit)   //if the player is in the sunlight
         {
-            playerController.doDamage(damagePerSecond * Time.deltaTime);
+            if (playerController.IsUmbrellaAvailable)   
+            {
+                playerController.getPlayerUmbrella().SetActive(true);
+                playerController.getPlayerUmbrella().GetComponent<UmbrellaHP>().doDamage(damagePerSecond * Time.deltaTime); //do damage to umbrella
+            }
+            else playerController.doDamage(damagePerSecond * Time.deltaTime);  //taking damage from sunlight only if umbrella isnt available
+        }
+        else    //if the player is in the shadow
+        {
+            if (playerController.IsUmbrellaAvailable)
+            {
+                playerController.getPlayerUmbrella().SetActive(false);
+            }
         }
     }
 }
