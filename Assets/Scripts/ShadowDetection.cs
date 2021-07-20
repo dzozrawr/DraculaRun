@@ -14,7 +14,7 @@ public class ShadowDetection : MonoBehaviour
     void Start()
     {
         lightDirection = -directionalLight.transform.forward;
-        layerMask = 1 << 3;    //hard coded  Player layer number=3
+        layerMask = (1 << 3) | (1 << 6);    //hard coded  Player layer number=3 and Tile layer number=6
         layerMask = ~layerMask;
 
         playerController = gameObject.GetComponent<PlayerController>();
@@ -32,11 +32,11 @@ public class ShadowDetection : MonoBehaviour
         {
             hit = Physics.Raycast(playerController.bat.transform.position, lightDirection, Mathf.Infinity, layerMask);
         }
-        
+
 
         if (!hit)   //if the player is in the sunlight
         {
-            if (playerController.IsUmbrellaAvailable)   
+            if (playerController.IsUmbrellaAvailable)
             {
                 playerController.getPlayerUmbrella().SetActive(true);
                 playerController.getPlayerUmbrella().GetComponent<UmbrellaHP>().doDamage(damagePerSecond * Time.deltaTime); //do damage to umbrella

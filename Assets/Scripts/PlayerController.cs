@@ -180,9 +180,10 @@ public class PlayerController : MonoBehaviour
         {
             unRotatePlayer();
         }
-       
-        if(isVampireForm) myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));  //gravity move
-        myCharacterController.Move(Vector3.forward * speed * Time.deltaTime);
+
+        Vector3 moveVector = Vector3.forward * speed * Time.deltaTime;
+        if (isVampireForm) myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));// else moveVector += new Vector3(0, -0.0001f, 0);  //gravity move
+        myCharacterController.Move(moveVector);
         //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z+speed*Time.deltaTime);    //empty game object "Player" moves
 
 
