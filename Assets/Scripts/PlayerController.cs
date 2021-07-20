@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthBar;
 
     public float turnSpeed = 0.15f;  //0.15f is the proper speed, could be scaled differently later
+    public float rotationSpeed = 0.01f;
 
     public bool IsVampireForm { get => isVampireForm; set => isVampireForm = value; }
 
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour
     public bool IsUmbrellaAvailable { get => isUmbrellaAvailable; set => isUmbrellaAvailable = value; }
 
     private GameObject playerUmbrella;
+
+    public float turnAngleLimit = 20;
 
     void Start()
     {
@@ -107,6 +110,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void unRotatePlayer()
+    {
+        if (transform.localEulerAngles.y != 0)
+        {
+            
+
+         
+            if (transform.localEulerAngles.y < 180)
+            {
+
+                if (transform.localEulerAngles.y - rotationSpeed * Time.deltaTime > turnAngleLimit) transform.localEulerAngles = new Vector3(0, 0, 0); else transform.Rotate(0, -rotationSpeed * Time.deltaTime, 0);
+            }
+            else
+            {
+
+                if (transform.localEulerAngles.y + rotationSpeed * Time.deltaTime < turnAngleLimit) transform.localEulerAngles = new Vector3(0, 0, 0); else transform.Rotate(0, +rotationSpeed * Time.deltaTime, 0);
+            }
+
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -122,16 +146,43 @@ public class PlayerController : MonoBehaviour
             if(touch.phase == TouchPhase.Moved)
             {
                 
+                  
+                  myCharacterController.Move(Vector3.right*(touch.deltaPosition.x * turnSpeed) * Time.deltaTime);
+
+              //  if (transform.localEulerAngles.y < turnAngleLimit || transform.localEulerAngles.y > 360 - turnAngleLimit)   //rotating the player
+              //  {
+                    if (( touch.deltaPosition.x < 0) && ((transform.localEulerAngles.y - rotationSpeed * Time.deltaTime) < (360 - turnAngleLimit))&&(transform.localEulerAngles.y - rotationSpeed * Time.deltaTime > 180)) transform.localEulerAngles = new Vector3(0, 360 - turnAngleLimit, 0);
+                    else if ((touch.deltaPosition.x > 0) && (( rotationSpeed * Time.deltaTime + transform.localEulerAngles.y) > turnAngleLimit) && (transform.localEulerAngles.y + rotationSpeed * Time.deltaTime < 180)) transform.localEulerAngles = new Vector3(0, turnAngleLimit, 0);
+                    else
+                    {
+                        transform.Rotate(0, Mathf.Sign(touch.deltaPosition.x) * rotationSpeed*Time.deltaTime , 0);
+                     
+                    }
+            //    }
+             //   else
+             //   {
+             //       if(transform.localEulerAngles.y<180 && touch.deltaPosition.x  < 0) transform.Rotate(0, Mathf.Sign(touch.deltaPosition.x) * rotationSpeed , 0);
+             //       if (transform.localEulerAngles.y > 180 && touch.deltaPosition.x > 0) transform.Rotate(0, Mathf.Sign(touch.deltaPosition.x) * rotationSpeed , 0);
+              //  }
                 
-                  myCharacterController.Move(transform.right*(touch.deltaPosition.x * turnSpeed) * Time.deltaTime);
-               
-              //  myCharacterController.enabled = false;
-              //  transform.position = new Vector3(transform.position.x + (touch.deltaPosition.x* turnSpeed)  * Time.deltaTime, transform.position.y, transform.position.z);
-               // myCharacterController.enabled = true;
+                
+                
+                //  myCharacterController.enabled = false;
+                //  transform.position = new Vector3(transform.position.x + (touch.deltaPosition.x* turnSpeed)  * Time.deltaTime, transform.position.y, transform.position.z);
+                // myCharacterController.enabled = true;
+            }
+            else
+            {
+                unRotatePlayer();
             }
         }
+        else
+        {
+            unRotatePlayer();
+        }
+       
         if(isVampireForm) myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));  //gravity move
-        myCharacterController.Move(transform.forward * speed * Time.deltaTime);
+        myCharacterController.Move(Vector3.forward * speed * Time.deltaTime);
         //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z+speed*Time.deltaTime);    //empty game object "Player" moves
 
 
