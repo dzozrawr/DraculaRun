@@ -10,12 +10,12 @@ public class PlayerController : MonoBehaviour
     private CharacterController myCharacterController;
     public GameObject tile;
 
-    public GameObject vampire,bat;
+    public GameObject vampire, bat;
 
     private bool isVampireForm = true;
 
-    private int tapCount=0;           //double tap variables
-    private float doubleTapTimer = 0f, doubleTapWaitTime=0.2f;
+    private int tapCount = 0;           //double tap variables
+    private float doubleTapTimer = 0f, doubleTapWaitTime = 0.2f;
 
     private float maxHP = 100, HP = 100;
     public HealthBar healthBar;
@@ -37,8 +37,8 @@ public class PlayerController : MonoBehaviour
         myCharacterController = GetComponent<CharacterController>();
         vampire.gameObject.SetActive(true);
         bat.gameObject.SetActive(false);
-        
-        for(int i = 0; i < transform.childCount; i++)
+
+        for (int i = 0; i < transform.childCount; i++)
         {
             if (transform.GetChild(i).name.Equals("UmbrellaPlayer"))
             {
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         healthBar.SetMaxHealth(maxHP);  //healthbar configuration
     }
 
-    
+
 
     private void switchCharacter()
     {
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
             bat.gameObject.SetActive(true);
             isVampireForm = false;
             deepCopyCharacterController(bat);
-          //  myCharacterController = bat.GetComponent<CharacterController>();
+            //  myCharacterController = bat.GetComponent<CharacterController>();
         }
         else
         {
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     private void deepCopyCharacterController(GameObject o)
     {
         CharacterController cc = o.GetComponent<CharacterController>();
-        myCharacterController.slopeLimit= cc.slopeLimit;
+        myCharacterController.slopeLimit = cc.slopeLimit;
         myCharacterController.stepOffset = cc.stepOffset;
         myCharacterController.skinWidth = cc.skinWidth;
         myCharacterController.minMoveDistance = cc.minMoveDistance;
@@ -97,13 +97,13 @@ public class PlayerController : MonoBehaviour
         {
             doubleTapTimer += Time.deltaTime;
         }
-        if (tapCount >= 2 )
+        if (tapCount >= 2)
         {
             switchCharacter();
             doubleTapTimer = 0.0f;
             tapCount = 0;
         }
-        if(doubleTapTimer > doubleTapWaitTime)
+        if (doubleTapTimer > doubleTapWaitTime)
         {
             doubleTapTimer = 0.0f;
             tapCount = 0;
@@ -112,20 +112,33 @@ public class PlayerController : MonoBehaviour
 
     private void unRotatePlayer()
     {
+
+        float constantMultiplier = 50;  //touch.deltaPosition values are between 0 to 150, so this multiplier was chosen accordingly
+        float rotationComplete = rotationSpeed * Time.deltaTime * constantMultiplier;
         if (transform.localEulerAngles.y != 0)
         {
-            
 
-         
+
+
             if (transform.localEulerAngles.y < 180)
             {
+                // Debug.Log(transform.localEulerAngles.y - rotationSpeed * Time.deltaTime * constantMultiplier);
+                if ((transform.localEulerAngles.y - rotationComplete) < 0)
+                {
+                    transform.localEulerAngles = new Vector3(0, 0, 0);
 
-                if (transform.localEulerAngles.y - rotationSpeed * Time.deltaTime > turnAngleLimit) transform.localEulerAngles = new Vector3(0, 0, 0); else transform.Rotate(0, -rotationSpeed * Time.deltaTime, 0);
+                }
+                else transform.Rotate(0, -rotationComplete, 0);
             }
             else
             {
 
-                if (transform.localEulerAngles.y + rotationSpeed * Time.deltaTime < turnAngleLimit) transform.localEulerAngles = new Vector3(0, 0, 0); else transform.Rotate(0, +rotationSpeed * Time.deltaTime, 0);
+                if ((transform.localEulerAngles.y + rotationComplete) > 360)
+                {
+                    transform.localEulerAngles = new Vector3(0, 0, 0);
+
+                }
+                else transform.Rotate(0, rotationComplete, 0);
             }
 
         }
@@ -143,30 +156,32 @@ public class PlayerController : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            if(touch.phase == TouchPhase.Moved)
+            if (touch.phase == TouchPhase.Moved)
             {
-                
-                  
-                  myCharacterController.Move(Vector3.right*(touch.deltaPosition.x * turnSpeed) * Time.deltaTime);
 
-              //  if (transform.localEulerAngles.y < turnAngleLimit || transform.localEulerAngles.y > 360 - turnAngleLimit)   //rotating the player
-              //  {
-                    if (( touch.deltaPosition.x < 0) && ((transform.localEulerAngles.y - rotationSpeed * Time.deltaTime) < (360 - turnAngleLimit))&&(transform.localEulerAngles.y - rotationSpeed * Time.deltaTime > 180)) transform.localEulerAngles = new Vector3(0, 360 - turnAngleLimit, 0);
-                    else if ((touch.deltaPosition.x > 0) && (( rotationSpeed * Time.deltaTime + transform.localEulerAngles.y) > turnAngleLimit) && (transform.localEulerAngles.y + rotationSpeed * Time.deltaTime < 180)) transform.localEulerAngles = new Vector3(0, turnAngleLimit, 0);
-                    else
-                    {
-                        transform.Rotate(0, Mathf.Sign(touch.deltaPosition.x) * rotationSpeed*Time.deltaTime , 0);
-                     
-                    }
-            //    }
-             //   else
-             //   {
-             //       if(transform.localEulerAngles.y<180 && touch.deltaPosition.x  < 0) transform.Rotate(0, Mathf.Sign(touch.deltaPosition.x) * rotationSpeed , 0);
-             //       if (transform.localEulerAngles.y > 180 && touch.deltaPosition.x > 0) transform.Rotate(0, Mathf.Sign(touch.deltaPosition.x) * rotationSpeed , 0);
-              //  }
-                
-                
-                
+
+                myCharacterController.Move(Vector3.right * (touch.deltaPosition.x * turnSpeed) * Time.deltaTime);
+
+                //  if (transform.localEulerAngles.y < turnAngleLimit || transform.localEulerAngles.y > 360 - turnAngleLimit)   //rotating the player
+                //  {
+                float rotationComplete = touch.deltaPosition.x * rotationSpeed * Time.deltaTime;
+
+                if ((touch.deltaPosition.x < 0) && ((transform.localEulerAngles.y - rotationComplete) < (360 - turnAngleLimit)) && (transform.localEulerAngles.y - rotationComplete > 180)) transform.localEulerAngles = new Vector3(0, 360 - turnAngleLimit, 0);
+                else if ((touch.deltaPosition.x > 0) && ((rotationComplete + transform.localEulerAngles.y) > turnAngleLimit) && (transform.localEulerAngles.y + rotationComplete < 180)) transform.localEulerAngles = new Vector3(0, turnAngleLimit, 0);
+                else
+                {
+                    transform.Rotate(0, rotationComplete, 0);
+
+                }
+                //    }
+                //   else
+                //   {
+                //       if(transform.localEulerAngles.y<180 && touch.deltaPosition.x  < 0) transform.Rotate(0, Mathf.Sign(touch.deltaPosition.x) * rotationSpeed , 0);
+                //       if (transform.localEulerAngles.y > 180 && touch.deltaPosition.x > 0) transform.Rotate(0, Mathf.Sign(touch.deltaPosition.x) * rotationSpeed , 0);
+                //  }
+
+
+
                 //  myCharacterController.enabled = false;
                 //  transform.position = new Vector3(transform.position.x + (touch.deltaPosition.x* turnSpeed)  * Time.deltaTime, transform.position.y, transform.position.z);
                 // myCharacterController.enabled = true;

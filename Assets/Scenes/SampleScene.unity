@@ -1267,7 +1267,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938243897}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 3
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -1968,7 +1968,7 @@ MonoBehaviour:
   bat: {fileID: 419974395}
   healthBar: {fileID: 1618309580}
   turnSpeed: 0.15
-  rotationSpeed: 150
+  rotationSpeed: 3
   turnAngleLimit: 30
 --- !u!4 &1529314240
 Transform:
@@ -2319,7 +2319,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841685365}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 3
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1

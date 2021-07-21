@@ -25,8 +25,9 @@ public class UmbrellaHP : MonoBehaviour
         HP += baseHP;
         if (HP > baseHP)
         {
-            healthBar.SetMaxHealth(HP);
             healthBar.SetHealth(HP);
+            healthBar.SetMaxHealth((((int)HP/ (int)baseHP)+1)*baseHP);
+            Debug.Log((((int)HP / (int)baseHP) + 1) * baseHP);
         }
     }
 
@@ -35,7 +36,6 @@ public class UmbrellaHP : MonoBehaviour
         HP -= dmg;
         healthBar.SetHealth(HP);
 
-        Debug.Log(HP);
 
         if (HP <= 0)
         {
