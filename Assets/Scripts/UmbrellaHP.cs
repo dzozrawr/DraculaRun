@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UmbrellaHP : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     public float baseHP = 10;
     private float HP=0;
 
@@ -14,7 +14,6 @@ public class UmbrellaHP : MonoBehaviour
 
     void Start()
     {
-       // HP = baseHP;
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         healthBar.SetMaxHealth(baseHP);
@@ -27,7 +26,6 @@ public class UmbrellaHP : MonoBehaviour
         {
             healthBar.SetHealth(HP);
             healthBar.SetMaxHealth((((int)HP/ (int)baseHP)+1)*baseHP);
-            Debug.Log((((int)HP / (int)baseHP) + 1) * baseHP);
         }
     }
 

@@ -1184,26 +1184,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &915200588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915200586}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97d41fa41245f5f49a3008f86d1ddb5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 7
-  tile: {fileID: 612290835}
-  vampire: {fileID: 0}
-  bat: {fileID: 0}
-  healthBar: {fileID: 0}
-  turnSpeed: 1000
-  rotationSpeed: 0.01
-  turnAngleLimit: 20
 --- !u!143 &915200589
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1491,7 +1471,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileToSpawn: {fileID: 3843968791034072266, guid: aaa840ede3e133c44a0c829e8ba069ff, type: 3}
   referenceObject: {fileID: 1415448508}
-  timeOffset: 0.4
 --- !u!1001 &1168040716
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1966,6 +1945,7 @@ MonoBehaviour:
   tile: {fileID: 612290835}
   vampire: {fileID: 915200586}
   bat: {fileID: 419974395}
+  playerUmbrella: {fileID: 1738394330}
   healthBar: {fileID: 1618309580}
   turnSpeed: 0.15
   rotationSpeed: 3
@@ -2179,6 +2159,11 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1738394330 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8569236199867924657, guid: 92eab339bb5d92d42a009c2ba3570ada, type: 3}
+  m_PrefabInstance: {fileID: 98404534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1792103576
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class DestroyTile : MonoBehaviour
     {
         if (transform.position.z < player.transform.position.z)     //if the tile is behind the player
         {
-            if ((player.transform.position.z - transform.position.z) > tileLength * distanceInTilesForDeletion)     //if the desired distance for delition is achieved
+            if ((player.transform.position.z - transform.position.z) > tileLength * distanceInTilesForDeletion)     //if the desired distance for deletion is achieved
             {
                 Destroy(gameObject);
             }
