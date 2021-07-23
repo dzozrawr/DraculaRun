@@ -62,12 +62,13 @@ public class PlayerController : MonoBehaviour
     {
         CharacterController cc = o.GetComponent<CharacterController>();
         myCharacterController.slopeLimit = cc.slopeLimit;
+        myCharacterController.height = cc.height;
         myCharacterController.stepOffset = cc.stepOffset;
         myCharacterController.skinWidth = cc.skinWidth;
         myCharacterController.minMoveDistance = cc.minMoveDistance;
         myCharacterController.center = cc.center + new Vector3(0, o.transform.localPosition.y, 0);
         myCharacterController.radius = cc.radius;
-        myCharacterController.height = cc.height;
+
     }
 
     private void detectDoubleTap()
