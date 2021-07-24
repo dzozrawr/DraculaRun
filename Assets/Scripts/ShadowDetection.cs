@@ -23,10 +23,20 @@ public class ShadowDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool hit;
+        bool hit,hitLeft,hitRight;
         if (playerController.IsVampireForm)
         {
+            GameObject vampireModel= playerController.vampire.transform.GetChild(0).gameObject;
+            vampireModel=vampireModel.transform.GetChild(1).gameObject; //vampireModels child that has a renderer
+            float vampiresLeftMostPoint=vampireModel.GetComponent<Renderer>().bounds.min.x;
+            float vampiresRightMostPoint = vampireModel.GetComponent<Renderer>().bounds.max.x;
+            Debug.Log("left="+vampiresLeftMostPoint+" right="+ vampiresRightMostPoint);
+            Vector3 leftMostVector = new Vector3(vampiresLeftMostPoint, playerController.vampire.transform.position.y, playerController.vampire.transform.position.z);
+            Vector3 rightMostVector = new Vector3(vampiresRightMostPoint, playerController.vampire.transform.position.y, playerController.vampire.transform.position.z);
             hit = Physics.Raycast(playerController.vampire.transform.position, lightDirection, Mathf.Infinity, layerMask);  //casting an infinite ray from player towards the lights direction
+          //  hitLeft = Physics.Raycast(leftMostVector, lightDirection, Mathf.Infinity, layerMask);  //casting an infinite ray from player towards the lights direction
+          //  hitRight = Physics.Raycast(rightMostVector, lightDirection, Mathf.Infinity, layerMask);  //casting an infinite ray from player towards the lights direction
+           // hit = hitLeft && hitRight;
         }
         else
         {

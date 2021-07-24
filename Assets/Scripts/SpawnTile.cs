@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnTile : MonoBehaviour
 {
-    public GameObject tileToSpawn;
+    //public GameObject tileToSpawn;
     public GameObject[] tilesToSpawn;
     public GameObject previousTile;
     private Vector3 previousTilePosition;
