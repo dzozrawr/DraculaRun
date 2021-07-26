@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
             bat.gameObject.SetActive(true);
             isVampireForm = false;
             deepCopyCharacterController(bat);
+            bat.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
         }
         else
         {
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
             bat.gameObject.SetActive(false);        //switching to vampire form
             isVampireForm = true;
             deepCopyCharacterController(vampire);
+            vampire.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
         }
     }
 
@@ -182,6 +184,12 @@ public class PlayerController : MonoBehaviour
     public void doDamage(float dmg)
     {
         HP -= dmg;
+        healthBar.SetHealth(HP);
+    }
+
+    public void addHP(float hp)
+    {
+        HP= HP > maxHP ? maxHP:HP+hp ;
         healthBar.SetHealth(HP);
     }
 }

@@ -23,7 +23,7 @@ public class ShadowDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool hit,hitLeft,hitRight;
+        bool hit;
         if (playerController.IsVampireForm)
         {
 
@@ -50,6 +50,7 @@ public class ShadowDetection : MonoBehaviour
         }
         else    //if the player is in the shadow
         {
+            playerController.addHP(damagePerSecond * Time.deltaTime);
             if (playerController.IsUmbrellaAvailable)
             {
                 playerController.getPlayerUmbrella().SetActive(false);
