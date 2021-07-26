@@ -48,15 +48,19 @@ public class PlayerController : MonoBehaviour
             bat.gameObject.SetActive(true);
             isVampireForm = false;
             deepCopyCharacterController(bat);
-            bat.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+            bat.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play(); //ParticleSystem is the second child of Bat game object
         }
         else
         {
+
+
             vampire.gameObject.SetActive(true);
             bat.gameObject.SetActive(false);        //switching to vampire form
             isVampireForm = true;
             deepCopyCharacterController(vampire);
             vampire.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+
+            bat.gameObject.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0, 0, 0);    //return bat model position to 0, otherwise the bat slowly ascends over time, because of the animation interruption
         }
     }
 
