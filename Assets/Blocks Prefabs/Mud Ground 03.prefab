@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3096813796386689119}
   - component: {fileID: 3096813796387787423}
   - component: {fileID: 3096813796392149759}
+  - component: {fileID: -1455189658965576623}
   m_Layer: 0
   m_Name: Mud Ground 03
   m_TagString: Untagged
@@ -113,6 +114,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: c5f2116ed9bce8c4da6cbb8402c3959d, type: 3}
+--- !u!114 &-1455189658965576623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3096813796385852511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b8beb925f093249a10713afa0877ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &603451116392507818
 PrefabInstance:
   m_ObjectHideFlags: 0

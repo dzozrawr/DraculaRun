@@ -18,13 +18,13 @@ public class SpawnTile : MonoBehaviour
         
         previousTilePosition = previousTile.transform.position;
         tileLength = previousTile.GetComponent<MeshRenderer>().bounds.size.z;
-        Debug.Log(tileLength);
+       // Debug.Log(tileLength);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+      //  if()
         Vector3 checkVector= Camera.main.WorldToViewportPoint(previousTilePosition);
 
         if (checkVector.x>0&& checkVector.x < 1&& checkVector.y > 0 && checkVector.y < 1 && checkVector.z>0) //if previous tile is seen by the camera, make a new one in front of it
@@ -35,7 +35,7 @@ public class SpawnTile : MonoBehaviour
             previousTilePosition = spawnPos;
             // tileLength = nextTile.transform.localScale.z;
             tileLength = nextTile.GetComponent<Renderer>().bounds.size.z;
-            Debug.Log(tileLength);
+           // Debug.Log(tileLength);
         }
 
     }

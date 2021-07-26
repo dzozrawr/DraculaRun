@@ -7,16 +7,28 @@ public class UmbrellaHP : MonoBehaviour
 
     public float baseHP = 10;
     private float HP=0;
+    private float maxHP=0;
 
     private PlayerController playerController;
 
-    public HealthBar healthBar;
+  //  public HealthBar healthBar;
+
+    private Material umbrellaMaterial;
+
+    private float maxR, maxG, maxB;
 
     void Start()
     {
+        umbrellaMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;  //should be getChild(0) when healthbar is deleted
+
+        maxR=umbrellaMaterial.GetColor("_Color").r;
+        maxG = umbrellaMaterial.GetColor("_Color").g;
+        maxB = umbrellaMaterial.GetColor("_Color").b;
+
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
-        healthBar.SetMaxHealth(baseHP);
+        maxHP = baseHP;
+       // healthBar.SetMaxHealth(maxHP);
     }
 
     public void addHP()
@@ -24,16 +36,20 @@ public class UmbrellaHP : MonoBehaviour
         HP += baseHP;
         if (HP > baseHP)
         {
-            healthBar.SetHealth(HP);
-            healthBar.SetMaxHealth((((int)HP/ (int)baseHP)+1)*baseHP);
+          //  healthBar.SetHealth(HP);
+            maxHP = (((int)HP / (int)baseHP) + 1) * baseHP;
+         //   healthBar.SetMaxHealth(maxHP);
         }
+        umbrellaMaterial.SetColor("_Color", new Color((HP / maxHP) * maxR, (HP / maxHP) * maxG, (HP / maxHP) * maxB));
     }
 
     public void doDamage(float dmg)
     {
         HP -= dmg;
-        healthBar.SetHealth(HP);
-
+       // healthBar.SetHealth(HP);
+    
+        
+        umbrellaMaterial.SetColor("_Color", new Color((HP / maxHP) * maxR, (HP / maxHP) * maxG, (HP / maxHP) * maxB));
 
         if (HP <= 0)
         {
