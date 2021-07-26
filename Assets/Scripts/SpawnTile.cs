@@ -15,8 +15,10 @@ public class SpawnTile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         previousTilePosition = previousTile.transform.position;
-        tileLength= previousTile.transform.localScale.z;
+        tileLength = previousTile.GetComponent<MeshRenderer>().bounds.size.z;
+        Debug.Log(tileLength);
     }
 
     // Update is called once per frame
@@ -31,7 +33,9 @@ public class SpawnTile : MonoBehaviour
             Vector3 spawnPos = previousTilePosition + tileLength * direction;
             Instantiate(nextTile, spawnPos, Quaternion.Euler(0, 0, 0));
             previousTilePosition = spawnPos;
-            tileLength = nextTile.transform.localScale.z;
+            // tileLength = nextTile.transform.localScale.z;
+            tileLength = nextTile.GetComponent<Renderer>().bounds.size.z;
+            Debug.Log(tileLength);
         }
 
     }
