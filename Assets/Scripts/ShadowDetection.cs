@@ -9,7 +9,7 @@ public class ShadowDetection : MonoBehaviour
     private int layerMask;
 
     private PlayerController playerController;
-    public float damagePerSecond = 5;
+    public float damagePerSecond = 5, healthRegenPerSecond=5;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +50,7 @@ public class ShadowDetection : MonoBehaviour
         }
         else    //if the player is in the shadow
         {
-            playerController.addHP(damagePerSecond * Time.deltaTime);
+            playerController.addHP(healthRegenPerSecond * Time.deltaTime);
             if (playerController.IsUmbrellaAvailable)
             {
                 playerController.getPlayerUmbrella().SetActive(false);

@@ -11,17 +11,19 @@ public class UmbrellaHP : MonoBehaviour
 
     private PlayerController playerController;
 
-  //  public HealthBar healthBar;
+    //  public HealthBar healthBar;
 
+    public GameObject umbrellaModel;
     private Material umbrellaMaterial;
 
     private float maxR, maxG, maxB;
 
-    void Start()
+    void Awake()
     {
-        umbrellaMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;  //should be getChild(0) when healthbar is deleted
+        umbrellaMaterial = umbrellaModel.GetComponent<Renderer>().material;  //should be getChild(0) when healthbar is deleted
+        //umbrellaMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;  //should be getChild(0) when healthbar is deleted
 
-        maxR=umbrellaMaterial.GetColor("_Color").r;
+        maxR =umbrellaMaterial.GetColor("_Color").r;
         maxG = umbrellaMaterial.GetColor("_Color").g;
         maxB = umbrellaMaterial.GetColor("_Color").b;
 

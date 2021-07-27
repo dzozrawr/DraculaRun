@@ -29,8 +29,12 @@ public class PlayerController : MonoBehaviour
     public float turnAngleLimit = 20;
 
     private int debugDeathCount = 0;    //to be deleted
+
+    private GameController gameController;
     void Start()
     {
+
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
         myCharacterController = GetComponent<CharacterController>();
         vampire.gameObject.SetActive(true);
         bat.gameObject.SetActive(false);
@@ -80,6 +84,7 @@ public class PlayerController : MonoBehaviour
 
     private void detectDoubleTap()
     {
+        if (Time.timeScale == 0) return;    //dont detect double tap if the game is paused (debug screen)
         if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             tapCount++;
@@ -193,8 +198,9 @@ public class PlayerController : MonoBehaviour
 
         if (HP < 0)
         {
-            debugDeathCount++;
-            Debug.Log("Death by sun frying " + debugDeathCount);    //will be replaced with game over
+            gameController.GameOver();
+            // debugDeathCount++;
+            // Debug.Log("Death by sun frying " + debugDeathCount);    //will be replaced with game over
         }
     }
 
@@ -207,8 +213,9 @@ public class PlayerController : MonoBehaviour
     {
         if (hit.gameObject.CompareTag("Obstacle"))
         {
-            debugDeathCount++;
-            Debug.Log("Death by collision "+ debugDeathCount);    //will be replaced with game over
+            gameController.GameOver();
+           // debugDeathCount++;
+           // Debug.Log("Death by collision " + debugDeathCount);    //will be replaced with game over
         }
     }
 
