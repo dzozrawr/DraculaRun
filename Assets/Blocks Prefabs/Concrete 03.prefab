@@ -283,7 +283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 28cd68796341a4a4aa77925afdc0f29c, type: 3}
       propertyPath: m_TagString
-      value: Obstacle
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 28cd68796341a4a4aa77925afdc0f29c, type: 3}
       propertyPath: m_RootOrder
@@ -328,6 +328,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 28cd68796341a4a4aa77925afdc0f29c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: 28cd68796341a4a4aa77925afdc0f29c, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28cd68796341a4a4aa77925afdc0f29c, type: 3}

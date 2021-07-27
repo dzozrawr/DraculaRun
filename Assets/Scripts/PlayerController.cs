@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     public float turnAngleLimit = 20;
 
+    private int debugDeathCount = 0;    //to be deleted
     void Start()
     {
         myCharacterController = GetComponent<CharacterController>();
@@ -189,11 +190,26 @@ public class PlayerController : MonoBehaviour
     {
         HP -= dmg;
         healthBar.SetHealth(HP);
+
+        if (HP < 0)
+        {
+            debugDeathCount++;
+            Debug.Log("Death by sun frying " + debugDeathCount);    //will be replaced with game over
+        }
     }
 
     public void addHP(float hp)
     {
-        HP= HP > maxHP ? maxHP:HP+hp ;
+        HP = HP > maxHP ? maxHP : HP + hp;
         healthBar.SetHealth(HP);
     }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Obstacle"))
+        {
+            debugDeathCount++;
+            Debug.Log("Death by collision "+ debugDeathCount);    //will be replaced with game over
+        }
+    }
+
 }
