@@ -216,6 +216,18 @@ public class PlayerController : MonoBehaviour
         HP = HP > maxHP ? maxHP : HP + hp;
         healthBar.SetHealth(HP);
     }
+
+    public void setMaxHP(float hp)      //for debugging purposes
+    {
+        maxHP = hp;
+        healthBar.SetMaxHealth(maxHP);      
+    }
+
+    public float getMaxHP()      //for debugging purposes
+    {
+        return maxHP;
+    }
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.gameObject.CompareTag("Obstacle"))

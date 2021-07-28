@@ -24,7 +24,6 @@ public class SpawnTile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      //  if()
         Vector3 checkVector= Camera.main.WorldToViewportPoint(previousTilePosition);
         // if (checkVector.x>0&& checkVector.x < 1&& checkVector.y > 0 && checkVector.y < 1 && checkVector.z>0) //if previous tile is seen by the camera, make a new one in front of it
         if (Camera.main.transform.position.z + Camera.main.farClipPlane > previousTilePosition.z) 
