@@ -6,11 +6,15 @@ using UnityEngine.UI;
 public class DebugScreen : MonoBehaviour
 {
     public GameObject player;
+    public Toggle deathToggleButton;
     public Slider charSpeedSlider;
     public Text charSpeedSliderText;
+    
 
     private void Start()
     {
+        deathToggleButton.isOn = player.GetComponent<PlayerController>().isDeathDisabled;
+
         charSpeedSlider.value = player.GetComponent<PlayerController>().speed;
         charSpeedSliderText.text = charSpeedSlider.value.ToString("F");
     }
@@ -30,5 +34,10 @@ public class DebugScreen : MonoBehaviour
         player.GetComponent<PlayerController>().speed= speed;
         charSpeedSliderText.text = charSpeedSlider.value.ToString("F");
         //  Debug.Log(speed);
+    }
+
+    public void toggleDeath(bool isDeathDisabled)
+    {
+        player.GetComponent<PlayerController>().isDeathDisabled = isDeathDisabled;
     }
 }

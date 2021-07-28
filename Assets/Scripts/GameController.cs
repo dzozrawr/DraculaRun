@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
-        Time.timeScale = 0;
+        Time.timeScale = 0f;
         float time = timePassed.GetComponent<TimePassed>().getTime();
         gameOverScreen.Setup(time);
     }

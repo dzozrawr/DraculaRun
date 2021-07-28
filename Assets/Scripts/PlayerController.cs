@@ -30,17 +30,19 @@ public class PlayerController : MonoBehaviour
 
     private int debugDeathCount = 0;    //to be deleted
 
-    private GameController gameController;
-    void Start()
-    {
+    public bool isDeathDisabled = false;
 
+    private GameController gameController;
+    void Awake()        //was Start()
+    {
+        HP = maxHP = 100;
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         myCharacterController = GetComponent<CharacterController>();
         vampire.gameObject.SetActive(true);
         bat.gameObject.SetActive(false);
         playerUmbrella.SetActive(false);
 
-        healthBar.SetMaxHealth(maxHP);  //healthbar configuration
+        healthBar.SetMaxHealth(maxHP);  //healthbar configuration       
     }
 
 
@@ -193,19 +195,24 @@ public class PlayerController : MonoBehaviour
 
     public void doDamage(float dmg)
     {
-        HP -= dmg;
+        if (Time.timeScale == 0) return;
+        HP = HP < 0 ? 0 : HP - dmg;
         healthBar.SetHealth(HP);
 
-        if (HP < 0)
+        if (HP <= 0)
         {
-            gameController.GameOver();
-            // debugDeathCount++;
-            // Debug.Log("Death by sun frying " + debugDeathCount);    //will be replaced with game over
+            if (!isDeathDisabled) gameController.GameOver(); //for debug menu
+            else
+            {
+                debugDeathCount++;
+                Debug.Log("Death by sun frying " + debugDeathCount);
+            }
         }
     }
 
     public void addHP(float hp)
     {
+        if (Time.timeScale == 0) return;
         HP = HP > maxHP ? maxHP : HP + hp;
         healthBar.SetHealth(HP);
     }
@@ -213,9 +220,13 @@ public class PlayerController : MonoBehaviour
     {
         if (hit.gameObject.CompareTag("Obstacle"))
         {
-            gameController.GameOver();
-           // debugDeathCount++;
-           // Debug.Log("Death by collision " + debugDeathCount);    //will be replaced with game over
+            if (!isDeathDisabled) gameController.GameOver(); //for debug menu
+            else
+            {
+                debugDeathCount++;
+                Debug.Log("Death by collision " + debugDeathCount);
+            }
+
         }
     }
 
