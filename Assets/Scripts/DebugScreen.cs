@@ -37,6 +37,9 @@ public class DebugScreen : MonoBehaviour
     public Slider charRotSpeedSlider;
     public Text charRotSpeedSliderText;
 
+    public Slider musicVolumeSlider;
+    public Text musicVolumeSliderText;
+
     private void Start()
     {
         deathToggleButton.isOn = player.GetComponent<PlayerController>().isDeathDisabled;
@@ -67,6 +70,9 @@ public class DebugScreen : MonoBehaviour
 
         charRotSpeedSlider.value = player.GetComponent<PlayerController>().rotationSpeed;
         charRotSpeedSliderText.text = charRotSpeedSlider.value.ToString("F");
+
+        musicVolumeSlider.value = SoundManagerScript.backgroundAudioSrc.volume;
+        musicVolumeSliderText.text = musicVolumeSlider.value.ToString("F");
     }
     public void Setup()
     {
@@ -143,7 +149,8 @@ public class DebugScreen : MonoBehaviour
 
     public void setMusicVolume(float musicVolume)
     {
-
+        SoundManagerScript.backgroundAudioSrc.volume = musicVolume;
+        musicVolumeSliderText.text= musicVolume.ToString("F");
     }
 
 }
