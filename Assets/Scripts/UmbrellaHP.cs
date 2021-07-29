@@ -18,6 +18,8 @@ public class UmbrellaHP : MonoBehaviour
 
     private float maxR, maxG, maxB;
 
+    private float hpPercent;
+
     void Awake()
     {
         umbrellaMaterial = umbrellaModel.GetComponent<Renderer>().material;  //should be getChild(0) when healthbar is deleted
@@ -30,28 +32,27 @@ public class UmbrellaHP : MonoBehaviour
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         maxHP = baseHP;
-       // healthBar.SetMaxHealth(maxHP);
     }
 
     public void addHP()
     {
         HP += baseHP;
-        if (HP > baseHP)
+        if (HP >= baseHP)
         {
-          //  healthBar.SetHealth(HP);
             maxHP = (((int)HP / (int)baseHP) + 1) * baseHP;
-         //   healthBar.SetMaxHealth(maxHP);
         }
-        umbrellaMaterial.SetColor("_Color", new Color((HP / maxHP) * maxR, (HP / maxHP) * maxG, (HP / maxHP) * maxB));
+
+        hpPercent = HP / maxHP;
+        umbrellaMaterial.SetColor("_Color", new Color(hpPercent * maxR, hpPercent * maxG, hpPercent * maxB));   //the umbrella darkens based on how much HP it has
     }
 
     public void doDamage(float dmg)
     {
         HP -= dmg;
-       // healthBar.SetHealth(HP);
-    
-        
-        umbrellaMaterial.SetColor("_Color", new Color((HP / maxHP) * maxR, (HP / maxHP) * maxG, (HP / maxHP) * maxB));
+        // healthBar.SetHealth(HP);
+
+        hpPercent = HP / maxHP;
+        umbrellaMaterial.SetColor("_Color", new Color(hpPercent * maxR, hpPercent * maxG, hpPercent * maxB));
 
         if (HP <= 0)
         {
