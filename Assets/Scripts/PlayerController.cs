@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
             isVampireForm = false;
             deepCopyCharacterController(bat);
             bat.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play(); //ParticleSystem is the second child of Bat game object
+            SFXManager.PlaySound("transformation");
         }
         else
         {
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour
             isVampireForm = true;
             deepCopyCharacterController(vampire);
             vampire.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+            SFXManager.PlaySound("transformation");
 
             bat.gameObject.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0, 0, 0);    //return bat model position to 0, otherwise the bat slowly ascends over time, because of the animation interruption
         }
