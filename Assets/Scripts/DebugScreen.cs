@@ -99,14 +99,12 @@ public class DebugScreen : MonoBehaviour
     {
         player.GetComponent<PlayerController>().speed= speed;
         charSpeedSliderText.text = charSpeedSlider.value.ToString("F");
-        //  Debug.Log(speed);
     }
 
     public void setCharacterTurnSpeed(float turnSpeed)
     {
         player.GetComponent<PlayerController>().turnSpeed = turnSpeed;
         charTurnSpeedSliderText.text = charTurnSpeedSlider.value.ToString("F");
-        //  Debug.Log(speed);
     }
 
 

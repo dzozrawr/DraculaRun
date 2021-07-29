@@ -22,7 +22,7 @@ public class DestroyTile : MonoBehaviour
         {
             if ((player.transform.position.z - transform.position.z) > tileLength * distanceInTilesForDeletion)     //if the desired distance for deletion is achieved
             {
-                Destroy(gameObject);
+                Destroy(gameObject);    //destroy this tile
             }
         }
 

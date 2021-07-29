@@ -11,11 +11,11 @@ public class SoundManagerScript : MonoBehaviour
     {
         //fryingSound = Resources.Load<AudioClip>("frying");
 
-        backgroundMusic = Resources.Load<AudioClip>("backgroundMusic");
-        backgroundAudioSrc = GetComponent<AudioSource>();
+       // backgroundMusic = Resources.Load<AudioClip>("backgroundMusic");
+      //  backgroundAudioSrc = GetComponent<AudioSource>();
 
-        backgroundAudioSrc.loop = true;
-        backgroundAudioSrc.clip = backgroundMusic;
+     //   backgroundAudioSrc.loop = true;
+      //  backgroundAudioSrc.clip = backgroundMusic;
      //   backgroundAudioSrc.Play();
         //audioSrc.volume;
     }

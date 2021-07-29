@@ -11,7 +11,6 @@ public class UmbrellaHP : MonoBehaviour
 
     private PlayerController playerController;
 
-    //  public HealthBar healthBar;
 
     public GameObject umbrellaModel;
     private Material umbrellaMaterial;
@@ -22,8 +21,7 @@ public class UmbrellaHP : MonoBehaviour
 
     void Awake()
     {
-        umbrellaMaterial = umbrellaModel.GetComponent<Renderer>().material;  //should be getChild(0) when healthbar is deleted
-        //umbrellaMaterial = gameObject.transform.GetChild(0).GetComponent<Renderer>().material;  //should be getChild(0) when healthbar is deleted
+        umbrellaMaterial = umbrellaModel.GetComponent<Renderer>().material;  
 
         maxR =umbrellaMaterial.GetColor("_Color").r;
         maxG = umbrellaMaterial.GetColor("_Color").g;
@@ -36,7 +34,7 @@ public class UmbrellaHP : MonoBehaviour
 
     public void addHP()
     {
-        HP += baseHP;
+        HP += baseHP;   //adding baseHP to umbrella 
         if (HP >= baseHP)
         {
             maxHP = (((int)HP / (int)baseHP) + 1) * baseHP;
@@ -48,11 +46,10 @@ public class UmbrellaHP : MonoBehaviour
 
     public void doDamage(float dmg)
     {
-        HP -= dmg;
-        // healthBar.SetHealth(HP);
+        HP -= dmg;  //damage from the sun
 
         hpPercent = HP / maxHP;
-        umbrellaMaterial.SetColor("_Color", new Color(hpPercent * maxR, hpPercent * maxG, hpPercent * maxB));
+        umbrellaMaterial.SetColor("_Color", new Color(hpPercent * maxR, hpPercent * maxG, hpPercent * maxB));   //the umbrella darkens based on how much HP it has
 
         if (HP <= 0)
         {

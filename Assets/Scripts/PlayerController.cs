@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     public float turnAngleLimit = 20;
 
-    private int debugDeathCount = 0;    //to be deleted
+    private int debugDeathCount = 0;   
 
     public bool isDeathDisabled = false;
 
@@ -159,8 +159,8 @@ public class PlayerController : MonoBehaviour
 
                 float rotationComplete = touch.deltaPosition.x * rotationSpeed * Time.deltaTime;    //beginning of rotating the player
 
-                if ((touch.deltaPosition.x < 0) && ((transform.localEulerAngles.y - rotationComplete) < (360 - turnAngleLimit)) && (transform.localEulerAngles.y - rotationComplete > 180)) transform.localEulerAngles = new Vector3(0, 360 - turnAngleLimit, 0);
-                else if ((touch.deltaPosition.x > 0) && ((rotationComplete + transform.localEulerAngles.y) > turnAngleLimit) && (transform.localEulerAngles.y + rotationComplete < 180)) transform.localEulerAngles = new Vector3(0, turnAngleLimit, 0);
+                if ((touch.deltaPosition.x < 0) && ((transform.localEulerAngles.y - rotationComplete) < (360 - turnAngleLimit)) && (transform.localEulerAngles.y - rotationComplete > 180)) transform.localEulerAngles = new Vector3(0, 360 - turnAngleLimit, 0); //the left turn angle limit
+                else if ((touch.deltaPosition.x > 0) && ((rotationComplete + transform.localEulerAngles.y) > turnAngleLimit) && (transform.localEulerAngles.y + rotationComplete < 180)) transform.localEulerAngles = new Vector3(0, turnAngleLimit, 0); //the right turn angle limit
                 else
                 {
                     transform.Rotate(0, rotationComplete, 0);   //rotates the player if not exceeding turnAngleLimit, otherwise snaps to turnAngleLimit
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
             unRotatePlayer();   //unrotate player if the person is not touching the screen
         }
 
-        if (isVampireForm) myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));   //applies gravity to the vampire and no the bat
+        if (isVampireForm) myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));   //applies gravity to the vampire and not the bat
         myCharacterController.Move(Vector3.forward * speed * Time.deltaTime);
 
     }

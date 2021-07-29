@@ -49,7 +49,7 @@ public class ShadowDetection : MonoBehaviour
         }
         else    //if the player is in the shadow
         {
-            playerController.addHP(healthRegenPerSecond * Time.deltaTime);
+            playerController.addHP(healthRegenPerSecond * Time.deltaTime);  //regenerating hp in the shadow
             if (playerController.IsUmbrellaAvailable)
             {
                 playerController.getPlayerUmbrella().SetActive(false);
