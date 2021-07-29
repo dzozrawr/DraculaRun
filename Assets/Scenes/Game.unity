@@ -4049,6 +4049,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilesToSpawn:
+  - {fileID: 5965282566817101256, guid: 589ca8c314b06264f91808ca43e58c25, type: 3}
   - {fileID: 7679274217784049912, guid: 57a4f06cd51b8594da2a6f6009c7258c, type: 3}
   - {fileID: 502113907899040401, guid: 5d0ea8736ca128947b1a2b8be3ff68a4, type: 3}
   - {fileID: 2252401408692063031, guid: 2839383ac955b7945933c6b4dcd56812, type: 3}
@@ -4060,7 +4061,6 @@ MonoBehaviour:
   - {fileID: 3096813796385852511, guid: b935e36ab6178394daec7d5f83533afc, type: 3}
   - {fileID: 9119044980206989512, guid: 3c2e0fa99b9c1bd41ba3035a3c28f9b3, type: 3}
   - {fileID: 1723335332855646371, guid: 94a3395329a91f6448137324109f1c98, type: 3}
-  - {fileID: 5965282566817101256, guid: 589ca8c314b06264f91808ca43e58c25, type: 3}
   previousTile: {fileID: 2055609290}
 --- !u!1 &986769509
 GameObject:

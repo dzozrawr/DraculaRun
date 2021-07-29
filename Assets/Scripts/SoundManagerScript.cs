@@ -16,7 +16,7 @@ public class SoundManagerScript : MonoBehaviour
 
         backgroundAudioSrc.loop = true;
         backgroundAudioSrc.clip = backgroundMusic;
-        backgroundAudioSrc.Play();
+     //   backgroundAudioSrc.Play();
         //audioSrc.volume;
     }
 
