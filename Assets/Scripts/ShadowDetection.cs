@@ -10,6 +10,7 @@ public class ShadowDetection : MonoBehaviour
 
     private PlayerController playerController;
     public float damagePerSecond = 5, healthRegenPerSecond=5;
+    private bool hit; //rayCast variable
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class ShadowDetection : MonoBehaviour
     void Update()
     {
         if (Time.timeScale == 0) return;    //if paused do nothing
-        bool hit;
+
         if (playerController.IsVampireForm)
         {
             hit = Physics.Raycast(playerController.vampire.transform.position, lightDirection, Mathf.Infinity, layerMask);  //casting an infinite ray from player towards the lights direction

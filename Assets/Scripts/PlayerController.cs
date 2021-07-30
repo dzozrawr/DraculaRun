@@ -28,12 +28,16 @@ public class PlayerController : MonoBehaviour
 
     public float turnAngleLimit = 20;
 
-    private int debugDeathCount = 0;   
+   // private int debugDeathCount = 0;   
 
     public bool isDeathDisabled = false;
 
     private GameController gameController;
-    void Awake()        //was Start()
+
+    private CharacterController cc; //temp variable
+    private float rotationComplete;  //temp variable
+
+    void Start()        //was Start()
     {
         HP = maxHP = 100;
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
@@ -75,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     private void deepCopyCharacterController(GameObject o)
     {
-        CharacterController cc = o.GetComponent<CharacterController>();
+        cc = o.GetComponent<CharacterController>();
         myCharacterController.slopeLimit = cc.slopeLimit;
         myCharacterController.height = cc.height;
         myCharacterController.stepOffset = cc.stepOffset;
@@ -115,7 +119,7 @@ public class PlayerController : MonoBehaviour
     {
 
         float unRotateMultiplier = 50;  //touch.deltaPosition values are between 0 to 150, so this multiplier was chosen accordingly
-        float rotationComplete = rotationSpeed * Time.deltaTime * unRotateMultiplier;
+        rotationComplete = rotationSpeed * Time.deltaTime * unRotateMultiplier;
         if (transform.localEulerAngles.y != 0)
         {
 
@@ -159,7 +163,7 @@ public class PlayerController : MonoBehaviour
 
                 myCharacterController.Move(Vector3.right * (touch.deltaPosition.x * turnSpeed) * Time.deltaTime);   //moves the player left and right
 
-                float rotationComplete = touch.deltaPosition.x * rotationSpeed * Time.deltaTime;    //beginning of rotating the player
+                rotationComplete = touch.deltaPosition.x * rotationSpeed * Time.deltaTime;    //beginning of rotating the player
 
                 if ((touch.deltaPosition.x < 0) && ((transform.localEulerAngles.y - rotationComplete) < (360 - turnAngleLimit)) && (transform.localEulerAngles.y - rotationComplete > 180)) transform.localEulerAngles = new Vector3(0, 360 - turnAngleLimit, 0); //the left turn angle limit
                 else if ((touch.deltaPosition.x > 0) && ((rotationComplete + transform.localEulerAngles.y) > turnAngleLimit) && (transform.localEulerAngles.y + rotationComplete < 180)) transform.localEulerAngles = new Vector3(0, turnAngleLimit, 0); //the right turn angle limit
@@ -206,8 +210,8 @@ public class PlayerController : MonoBehaviour
             if (!isDeathDisabled) gameController.GameOver(); //for debug menu
             else
             {
-                debugDeathCount++;
-                Debug.Log("Death by sun frying " + debugDeathCount);
+             //   debugDeathCount++;
+             //   Debug.Log("Death by sun frying " + debugDeathCount);
             }
         }
     }
@@ -237,8 +241,8 @@ public class PlayerController : MonoBehaviour
             if (!isDeathDisabled) gameController.GameOver(); //for debug menu
             else
             {
-                debugDeathCount++;
-                Debug.Log("Death by collision " + debugDeathCount);
+             //   debugDeathCount++;
+             //   Debug.Log("Death by collision " + debugDeathCount);
             }
 
         }
