@@ -97,7 +97,7 @@ public class DebugScreen : MonoBehaviour
     }
     public void setCharacterSpeed(float speed)
     {
-        player.GetComponent<PlayerController>().speed= speed;
+        player.GetComponent<PlayerController>().speed = speed;
         charSpeedSliderText.text = charSpeedSlider.value.ToString("F");
     }
 
@@ -112,7 +112,7 @@ public class DebugScreen : MonoBehaviour
     public void setSunDPS(float sunDPS)
     {
         player.GetComponent<ShadowDetection>().damagePerSecond = sunDPS;
-        sunDPSSliderText.text=sunDPSSlider.value.ToString("F");
+        sunDPSSliderText.text = sunDPSSlider.value.ToString("F");
     }
 
     public void setShadowHPS(float shadowHPS)
@@ -148,7 +148,7 @@ public class DebugScreen : MonoBehaviour
     public void setMusicVolume(float musicVolume)
     {
         SoundManagerScript.backgroundAudioSrc.volume = musicVolume;
-        musicVolumeSliderText.text= musicVolume.ToString("F");
+        musicVolumeSliderText.text = musicVolume.ToString("F");
     }
 
 }

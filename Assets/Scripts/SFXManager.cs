@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SFXManager : MonoBehaviour     //class made, because additional sound effects will be added hopefully
-{
-    public static AudioClip transformationSound;
-    public static AudioSource  audioSrc;
+{                                           //this class is actually for non looping sfx
+    public static AudioClip transformationSound, umbrellaPickupSound;
+    public static AudioSource audioSrc;
     // Start is called before the first frame update
     void Start()
     {
         transformationSound = Resources.Load<AudioClip>("transformation");
+        umbrellaPickupSound= Resources.Load<AudioClip>("umbrellaPickup");
 
-
-        audioSrc = GetComponent<AudioSource>();
+        audioSrc = GetComponent<AudioSource>();        
     }
 
     public static void PlaySound(string clip)
@@ -20,7 +20,10 @@ public class SFXManager : MonoBehaviour     //class made, because additional sou
         switch (clip)
         {
             case "transformation":
-                audioSrc.PlayOneShot(transformationSound);
+                audioSrc.PlayOneShot(transformationSound,0.75f);
+                break;
+            case "umbrellaPickup":
+                audioSrc.PlayOneShot(umbrellaPickupSound);
                 break;
         }
     }

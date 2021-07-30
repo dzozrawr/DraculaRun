@@ -6,8 +6,8 @@ public class UmbrellaHP : MonoBehaviour
 {
 
     public float baseHP = 10;
-    private float HP=0;
-    private float maxHP=0;
+    private float HP = 0;
+    private float maxHP = 0;
 
     private PlayerController playerController;
 
@@ -21,15 +21,18 @@ public class UmbrellaHP : MonoBehaviour
 
     void Awake()
     {
-        umbrellaMaterial = umbrellaModel.GetComponent<Renderer>().material;  
+        umbrellaMaterial = umbrellaModel.GetComponent<Renderer>().material;
 
-        maxR =umbrellaMaterial.GetColor("_Color").r;
+        maxR = umbrellaMaterial.GetColor("_Color").r;
         maxG = umbrellaMaterial.GetColor("_Color").g;
         maxB = umbrellaMaterial.GetColor("_Color").b;
 
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-
         maxHP = baseHP;
+    }
+
+    private void Start()
+    {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     public void addHP()

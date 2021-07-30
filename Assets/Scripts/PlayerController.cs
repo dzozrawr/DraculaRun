@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     public float turnAngleLimit = 20;
 
-   // private int debugDeathCount = 0;   
+    // private int debugDeathCount = 0;   
 
     public bool isDeathDisabled = false;
 
@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController cc; //temp variable
     private float rotationComplete;  //temp variable
+
+    private AudioSource runningOrFlyingAudioSrc;
 
     void Start()        //was Start()
     {
@@ -46,7 +48,9 @@ public class PlayerController : MonoBehaviour
         bat.gameObject.SetActive(false);
         playerUmbrella.SetActive(false);
 
-        healthBar.SetMaxHealth(maxHP);  //healthbar configuration       
+        healthBar.SetMaxHealth(maxHP);  //healthbar configuration      
+
+        runningOrFlyingAudioSrc = vampire.gameObject.GetComponent<AudioSource>();
     }
 
 
@@ -61,6 +65,9 @@ public class PlayerController : MonoBehaviour
             deepCopyCharacterController(bat);
             bat.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play(); //ParticleSystem is the second child of Bat game object
             SFXManager.PlaySound("transformation");
+
+            if (runningOrFlyingAudioSrc.isPlaying) runningOrFlyingAudioSrc.Stop();
+            runningOrFlyingAudioSrc= bat.gameObject.GetComponent<AudioSource>();
         }
         else
         {
@@ -72,6 +79,9 @@ public class PlayerController : MonoBehaviour
             deepCopyCharacterController(vampire);
             vampire.gameObject.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
             SFXManager.PlaySound("transformation");
+
+            if (runningOrFlyingAudioSrc.isPlaying) runningOrFlyingAudioSrc.Stop();
+            runningOrFlyingAudioSrc = vampire.gameObject.GetComponent<AudioSource>();  
 
             bat.gameObject.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0, 0, 0);    //return bat model position to 0, otherwise the bat slowly ascends over time, because of the animation interruption
         }
@@ -148,9 +158,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void playSFX()
+    {
+        if (Time.timeScale == 0) return;
+
+        if (!runningOrFlyingAudioSrc.isPlaying) runningOrFlyingAudioSrc.Play(); //for looping running sound or flying sound
+    }
+
     // Update is called once per frame
     void Update()
     {
+   
 
         detectDoubleTap();
 
@@ -185,6 +203,7 @@ public class PlayerController : MonoBehaviour
         if (isVampireForm) myCharacterController.SimpleMove(new Vector3(0f, 0f, 0f));   //applies gravity to the vampire and not the bat
         myCharacterController.Move(Vector3.forward * speed * Time.deltaTime);
 
+        playSFX();
     }
 
     public void pickUpUmbrella()
@@ -205,13 +224,14 @@ public class PlayerController : MonoBehaviour
         HP = HP < 0 ? 0 : HP - dmg;
         healthBar.SetHealth(HP);
 
+        
         if (HP <= 0)
         {
             if (!isDeathDisabled) gameController.GameOver(); //for debug menu
             else
             {
-             //   debugDeathCount++;
-             //   Debug.Log("Death by sun frying " + debugDeathCount);
+                //   debugDeathCount++;
+                //   Debug.Log("Death by sun frying " + debugDeathCount);
             }
         }
     }
@@ -226,7 +246,7 @@ public class PlayerController : MonoBehaviour
     public void setMaxHP(float hp)      //for debugging purposes
     {
         maxHP = hp;
-        healthBar.SetMaxHealth(maxHP);      
+        healthBar.SetMaxHealth(maxHP);
     }
 
     public float getMaxHP()      //for debugging purposes
@@ -241,8 +261,8 @@ public class PlayerController : MonoBehaviour
             if (!isDeathDisabled) gameController.GameOver(); //for debug menu
             else
             {
-             //   debugDeathCount++;
-             //   Debug.Log("Death by collision " + debugDeathCount);
+                //   debugDeathCount++;
+                //   Debug.Log("Death by collision " + debugDeathCount);
             }
 
         }

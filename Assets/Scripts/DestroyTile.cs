@@ -11,7 +11,7 @@ public class DestroyTile : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        tileLength = transform.localScale.z;
+        tileLength = gameObject.GetComponent<MeshRenderer>().bounds.size.z;
     }
 
 
@@ -22,7 +22,7 @@ public class DestroyTile : MonoBehaviour
         {
             if ((player.transform.position.z - transform.position.z) > tileLength * distanceInTilesForDeletion)     //if the desired distance for deletion is achieved
             {
-                Destroy(gameObject);    //destroy this tile
+                Destroy(gameObject);
             }
         }
 

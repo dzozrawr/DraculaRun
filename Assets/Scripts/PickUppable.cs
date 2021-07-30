@@ -10,7 +10,7 @@ public class PickUppable : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerController>().pickUpUmbrella(); //umbrella becomes available and gains +baseHP
             //effect, could be made abstract in case of multiple power ups
-            //play sound maybe
+            SFXManager.PlaySound("umbrellaPickup");
             Destroy(gameObject);
         }
     }

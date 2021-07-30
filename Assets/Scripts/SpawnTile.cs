@@ -18,7 +18,7 @@ public class SpawnTile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         previousTilePosition = previousTile.transform.position;
         tileLength = previousTile.GetComponent<MeshRenderer>().bounds.size.z;
     }
@@ -30,7 +30,7 @@ public class SpawnTile : MonoBehaviour
         // if (checkVector.x>0&& checkVector.x < 1&& checkVector.y > 0 && checkVector.y < 1 && checkVector.z>0) //previous tile detection strategy (by the camera)
         if (Camera.main.transform.position.z + Camera.main.farClipPlane > previousTilePosition.z) //if far clip plane is in front of the previous tile, generate a new tile
         {
-            nextTile = tilesToSpawn[Random.Range(0, tilesToSpawn.Length)];            
+            nextTile = tilesToSpawn[Random.Range(0, tilesToSpawn.Length)];
             spawnPos = previousTilePosition + tileLength * direction;
             Instantiate(nextTile, spawnPos, Quaternion.Euler(0, 0, 0));
             previousTilePosition = spawnPos;

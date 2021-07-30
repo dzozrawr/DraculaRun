@@ -9,8 +9,9 @@ public class ShadowDetection : MonoBehaviour
     private int layerMask;
 
     private PlayerController playerController;
-    public float damagePerSecond = 5, healthRegenPerSecond=5;
+    public float damagePerSecond = 5, healthRegenPerSecond = 5;
     private bool hit; //rayCast variable
+    private AudioSource sizzlingAudioSrc;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +20,18 @@ public class ShadowDetection : MonoBehaviour
         layerMask = ~layerMask;
 
         playerController = gameObject.GetComponent<PlayerController>();
+        sizzlingAudioSrc = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeScale == 0) return;    //if paused do nothing
+        if (Time.timeScale == 0)
+        {
+            if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
+            return;
+        }
+        //if paused do nothing
 
         if (playerController.IsVampireForm)
         {
@@ -42,15 +49,18 @@ public class ShadowDetection : MonoBehaviour
             {
                 playerController.getPlayerUmbrella().SetActive(true);
                 playerController.getPlayerUmbrella().GetComponent<UmbrellaHP>().doDamage(damagePerSecond * Time.deltaTime); //do damage to umbrella
+                if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
             }
             else
-            {                
+            {
                 playerController.doDamage(damagePerSecond * Time.deltaTime);  //taking damage from sunlight only if umbrella isnt available
+                if (!sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Play();
             }
         }
         else    //if the player is in the shadow
         {
-            playerController.addHP(healthRegenPerSecond * Time.deltaTime);  //regenerating hp in the shadow
+            if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
+                playerController.addHP(healthRegenPerSecond * Time.deltaTime);  //regenerating hp in the shadow
             if (playerController.IsUmbrellaAvailable)
             {
                 playerController.getPlayerUmbrella().SetActive(false);

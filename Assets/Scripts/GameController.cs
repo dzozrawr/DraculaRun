@@ -12,9 +12,9 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
-        Time.timeScale = 0f;    //pauses the game
+        Time.timeScale = 0f;
         float time = timePassed.GetComponent<TimePassed>().getTime();
-        gameOverScreen.Setup(time); //opens game over screen
+        gameOverScreen.Setup(time);
     }
 
     public void DebugMenu()
