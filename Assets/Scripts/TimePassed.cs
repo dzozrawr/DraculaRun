@@ -16,7 +16,7 @@ public class TimePassed : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        gameObject.GetComponent<Text>().text = time.ToString("F")+"s";
+        gameObject.GetComponent<Text>().text = time.ToString("F")+" sec";
     }
 
     public float getTime()

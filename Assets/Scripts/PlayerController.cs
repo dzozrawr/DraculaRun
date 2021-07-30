@@ -39,17 +39,20 @@ public class PlayerController : MonoBehaviour
 
     private AudioSource runningOrFlyingAudioSrc;
 
-    void Start()        //was Start()
+
+    private void Awake()
     {
         HP = maxHP = 100;
-        gameController = GameObject.Find("GameController").GetComponent<GameController>();
         myCharacterController = GetComponent<CharacterController>();
         vampire.gameObject.SetActive(true);
         bat.gameObject.SetActive(false);
         playerUmbrella.SetActive(false);
 
+    }
+    void Start()        
+    {        
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
         healthBar.SetMaxHealth(maxHP);  //healthbar configuration      
-
         runningOrFlyingAudioSrc = vampire.gameObject.GetComponent<AudioSource>();
     }
 

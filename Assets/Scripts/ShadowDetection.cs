@@ -11,27 +11,35 @@ public class ShadowDetection : MonoBehaviour
     private PlayerController playerController;
     public float damagePerSecond = 5, healthRegenPerSecond = 5;
     private bool hit; //rayCast variable
-    private AudioSource sizzlingAudioSrc;
-    // Start is called before the first frame update
-    void Start()
+    public GameObject healthBarGlow;    //the health bar glows when the player is in the sun
+
+
+    // private AudioSource sizzlingAudioSrc; //sizzling while in the sunlight was here previously
+
+
+
+    private void Awake()
     {
         lightDirection = -directionalLight.transform.forward;
         layerMask = (1 << 3) | (1 << 6);    //hard coded  Player layer number=3 and Tile layer number=6
         layerMask = ~layerMask;
-
+    }
+    void Start()
+    {
         playerController = gameObject.GetComponent<PlayerController>();
-        sizzlingAudioSrc = gameObject.GetComponent<AudioSource>();
+        healthBarGlow.SetActive(false);
+       // sizzlingAudioSrc = gameObject.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if (Time.timeScale == 0)
+        if (Time.timeScale == 0)  //if paused do nothing
         {
-            if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
+            //if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
             return;
         }
-        //if paused do nothing
+       
 
         if (playerController.IsVampireForm)
         {
@@ -49,17 +57,20 @@ public class ShadowDetection : MonoBehaviour
             {
                 playerController.getPlayerUmbrella().SetActive(true);
                 playerController.getPlayerUmbrella().GetComponent<UmbrellaHP>().doDamage(damagePerSecond * Time.deltaTime); //do damage to umbrella
-                if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
+                healthBarGlow.SetActive(false);
+               // if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
             }
             else
             {
                 playerController.doDamage(damagePerSecond * Time.deltaTime);  //taking damage from sunlight only if umbrella isnt available
-                if (!sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Play();
+                healthBarGlow.SetActive(true);
+               // if (!sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Play();
             }
         }
         else    //if the player is in the shadow
         {
-            if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
+            healthBarGlow.SetActive(false);
+           // if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
                 playerController.addHP(healthRegenPerSecond * Time.deltaTime);  //regenerating hp in the shadow
             if (playerController.IsUmbrellaAvailable)
             {

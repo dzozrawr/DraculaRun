@@ -22,9 +22,5 @@ public class GameOverScreen : MonoBehaviour
         
     }
 
-    public void ExitButton()
-    {
-        SceneManager.LoadScene("MainMenu");
-        Time.timeScale = 1f;
-    }
+
 }
