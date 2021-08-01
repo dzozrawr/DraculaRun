@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isUmbrellaAvailable = false;
     public bool IsUmbrellaAvailable { get => isUmbrellaAvailable; set => isUmbrellaAvailable = value; }
+    
 
     public float turnAngleLimit = 20;
 
@@ -39,7 +40,8 @@ public class PlayerController : MonoBehaviour
 
     private AudioSource runningOrFlyingAudioSrc;
 
-
+    private bool isScriptStarted=false;
+    public bool IsScriptStarted { get => isScriptStarted; }
     private void Awake()
     {
         HP = maxHP = 100;
@@ -54,6 +56,8 @@ public class PlayerController : MonoBehaviour
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         healthBar.SetMaxHealth(maxHP);  //healthbar configuration      
         runningOrFlyingAudioSrc = vampire.gameObject.GetComponent<AudioSource>();
+
+        isScriptStarted = true;
     }
 
 

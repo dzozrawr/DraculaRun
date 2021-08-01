@@ -34,7 +34,7 @@ public class ShadowDetection : MonoBehaviour
 
     void Update()
     {
-        if (Time.timeScale == 0)  //if paused do nothing
+        if (Time.timeScale == 0 || !playerController.IsScriptStarted)  //if paused do nothing OR if player isnt instantiated (hp=0) do nothing
         {
             //if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
             return;
