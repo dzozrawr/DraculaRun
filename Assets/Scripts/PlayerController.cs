@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour
 
     private AudioSource runningOrFlyingAudioSrc;
 
-    private bool isScriptStarted=false;
-    public bool IsScriptStarted { get => isScriptStarted; }
+
+    private float manualUnrotateMultiplier;
     private void Awake()
     {
         HP = maxHP = 100;
@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour
         healthBar.SetMaxHealth(maxHP);  //healthbar configuration      
         runningOrFlyingAudioSrc = vampire.gameObject.GetComponent<AudioSource>();
 
-        isScriptStarted = true;
     }
 
 
@@ -190,11 +189,27 @@ public class PlayerController : MonoBehaviour
 
                 rotationComplete = touch.deltaPosition.x * rotationSpeed * Time.deltaTime;    //beginning of rotating the player
 
+                manualUnrotateMultiplier = 3;
+
                 if ((touch.deltaPosition.x < 0) && ((transform.localEulerAngles.y - rotationComplete) < (360 - turnAngleLimit)) && (transform.localEulerAngles.y - rotationComplete > 180)) transform.localEulerAngles = new Vector3(0, 360 - turnAngleLimit, 0); //the left turn angle limit
                 else if ((touch.deltaPosition.x > 0) && ((rotationComplete + transform.localEulerAngles.y) > turnAngleLimit) && (transform.localEulerAngles.y + rotationComplete < 180)) transform.localEulerAngles = new Vector3(0, turnAngleLimit, 0); //the right turn angle limit
                 else
                 {
+                    if (transform.localEulerAngles.y > 180 && touch.deltaPosition.x > 0)    //speed up the manual unrotation from left to right
+                    {
+                        rotationComplete *= manualUnrotateMultiplier;
+                       // rotationComplete = (transform.localEulerAngles.y + (rotationComplete * manualUnrotateMultiplier)) > 360 ? rotationComplete = 360- transform.localEulerAngles.y : rotationComplete *= manualUnrotateMultiplier;
+                    }
+
+                    if (transform.localEulerAngles.y!=0 && transform.localEulerAngles.y < 180 && touch.deltaPosition.x < 0) //speed up the manual unrotation from right to left
+                    {
+                        rotationComplete *= manualUnrotateMultiplier;
+                        // rotationComplete = (transform.localEulerAngles.y - (rotationComplete * manualUnrotateMultiplier)) < 0 ? rotationComplete = transform.localEulerAngles.y : rotationComplete *= manualUnrotateMultiplier;
+
+                    }
+
                     transform.Rotate(0, rotationComplete, 0);   //rotates the player if not exceeding turnAngleLimit, otherwise snaps to turnAngleLimit
+                    
                 }
             }
             else
