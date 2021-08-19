@@ -35,7 +35,7 @@ public class UmbrellaHP : MonoBehaviour
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
-    public void addHP()
+    public void addHP() //null reference exception negde ovde
     {
         HP += baseHP;   //adding baseHP to umbrella 
         if (HP >= baseHP)
@@ -44,7 +44,7 @@ public class UmbrellaHP : MonoBehaviour
         }
 
         hpPercent = HP / maxHP;
-        umbrellaMaterial.SetColor("_Color", new Color(hpPercent * maxR, hpPercent * maxG, hpPercent * maxB));   //the umbrella darkens based on how much HP it has
+        if(gameObject.activeSelf) umbrellaMaterial.SetColor("_Color", new Color(hpPercent * maxR, hpPercent * maxG, hpPercent * maxB));   //the umbrella darkens based on how much HP it has
     }
 
     public void doDamage(float dmg)

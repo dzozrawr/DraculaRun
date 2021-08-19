@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+
     public float speed = 7.0f;
+
     private CharacterController myCharacterController;
     public GameObject tile;
 
@@ -49,7 +52,6 @@ public class PlayerController : MonoBehaviour
         vampire.gameObject.SetActive(true);
         bat.gameObject.SetActive(false);
         playerUmbrella.SetActive(false);
-
     }
     void Start()        
     {        
