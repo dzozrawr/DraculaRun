@@ -12,8 +12,18 @@ public class GameController : MonoBehaviour
 
     private float highScore;
 
+    [SerializeField] private float tutorialLifetimeInSec = 3;
+    public GameObject tutorialUIElements;
+
     private void Awake()
     {
+        int n_runs=PlayerPrefs.GetInt("numberOfGameSceneLoads");
+        if (n_runs == 0)
+        {
+            tutorialUIElements.SetActive(true);
+            PlayerPrefs.SetInt("numberOfGameSceneLoads", 1);
+        }
+
         Time.timeScale = 1f;    //if the game was paused
 
         if (FileManager.LoadFromFile("HighScore.dat", out var json))
@@ -29,6 +39,19 @@ public class GameController : MonoBehaviour
             highScore = 0f;
         }
         Debug.Log("The high score is: " + highScore);
+    }
+
+    private void Update()
+    {
+       
+        if (tutorialLifetimeInSec <= 0)
+        {
+            tutorialUIElements.SetActive(false);
+        }
+        else
+        {
+            tutorialLifetimeInSec -= Time.deltaTime;
+        }
     }
 
     public void GameOver()

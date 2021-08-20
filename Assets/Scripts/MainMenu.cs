@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+
+    private void Awake()
+    {
+        PlayerPrefs.SetInt("numberOfGameSceneLoads", 0);
+    }
     // Start is called before the first frame update
     public void PlayGame()
     {
