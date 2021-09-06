@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isUmbrellaAvailable = false;
     public bool IsUmbrellaAvailable { get => isUmbrellaAvailable; set => isUmbrellaAvailable = value; }
-    
+
 
     public float turnAngleLimit = 20;
 
@@ -45,6 +45,15 @@ public class PlayerController : MonoBehaviour
 
 
     private float manualUnrotateMultiplier;
+
+    [SerializeField] private Animator draculaAnimator;
+    [SerializeField] private Animator batAnimator;
+
+
+    [SerializeField] private GameObject draculaAsh, batAsh; //ash models for when the characters burn in the sun
+   // [SerializeField] private GameObject batAsh;
+
+    private bool isGameOver = false;
     private void Awake()
     {
         HP = maxHP = 100;
@@ -53,8 +62,8 @@ public class PlayerController : MonoBehaviour
         bat.gameObject.SetActive(false);
         playerUmbrella.SetActive(false);
     }
-    void Start()        
-    {        
+    void Start()
+    {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         healthBar.SetMaxHealth(maxHP);  //healthbar configuration      
         runningOrFlyingAudioSrc = vampire.gameObject.GetComponent<AudioSource>();
@@ -75,7 +84,7 @@ public class PlayerController : MonoBehaviour
             SFXManager.PlaySound("transformation");
 
             if (runningOrFlyingAudioSrc.isPlaying) runningOrFlyingAudioSrc.Stop();
-            runningOrFlyingAudioSrc= bat.gameObject.GetComponent<AudioSource>();
+            runningOrFlyingAudioSrc = bat.gameObject.GetComponent<AudioSource>();
         }
         else
         {
@@ -89,7 +98,7 @@ public class PlayerController : MonoBehaviour
             SFXManager.PlaySound("transformation");
 
             if (runningOrFlyingAudioSrc.isPlaying) runningOrFlyingAudioSrc.Stop();
-            runningOrFlyingAudioSrc = vampire.gameObject.GetComponent<AudioSource>();  
+            runningOrFlyingAudioSrc = vampire.gameObject.GetComponent<AudioSource>();
 
             bat.gameObject.transform.GetChild(0).gameObject.transform.localPosition = new Vector3(0, 0, 0);    //return bat model position to 0, otherwise the bat slowly ascends over time, because of the animation interruption
         }
@@ -168,6 +177,7 @@ public class PlayerController : MonoBehaviour
 
     public void playSFX()
     {
+        if (isGameOver) return;
         if (Time.timeScale == 0) return;
 
         if (!runningOrFlyingAudioSrc.isPlaying) runningOrFlyingAudioSrc.Play(); //for looping running sound or flying sound
@@ -176,7 +186,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-   
+        if (isGameOver) return;
 
         detectDoubleTap();
 
@@ -200,10 +210,10 @@ public class PlayerController : MonoBehaviour
                     if (transform.localEulerAngles.y > 180 && touch.deltaPosition.x > 0)    //speed up the manual unrotation from left to right
                     {
                         rotationComplete *= manualUnrotateMultiplier;
-                       // rotationComplete = (transform.localEulerAngles.y + (rotationComplete * manualUnrotateMultiplier)) > 360 ? rotationComplete = 360- transform.localEulerAngles.y : rotationComplete *= manualUnrotateMultiplier;
+                        // rotationComplete = (transform.localEulerAngles.y + (rotationComplete * manualUnrotateMultiplier)) > 360 ? rotationComplete = 360- transform.localEulerAngles.y : rotationComplete *= manualUnrotateMultiplier;
                     }
 
-                    if (transform.localEulerAngles.y!=0 && transform.localEulerAngles.y < 180 && touch.deltaPosition.x < 0) //speed up the manual unrotation from right to left
+                    if (transform.localEulerAngles.y != 0 && transform.localEulerAngles.y < 180 && touch.deltaPosition.x < 0) //speed up the manual unrotation from right to left
                     {
                         rotationComplete *= manualUnrotateMultiplier;
                         // rotationComplete = (transform.localEulerAngles.y - (rotationComplete * manualUnrotateMultiplier)) < 0 ? rotationComplete = transform.localEulerAngles.y : rotationComplete *= manualUnrotateMultiplier;
@@ -211,7 +221,7 @@ public class PlayerController : MonoBehaviour
                     }
 
                     transform.Rotate(0, rotationComplete, 0);   //rotates the player if not exceeding turnAngleLimit, otherwise snaps to turnAngleLimit
-                    
+
                 }
             }
             else
@@ -244,15 +254,41 @@ public class PlayerController : MonoBehaviour
 
     public void doDamage(float dmg)
     {
+        if (isGameOver) return;
         if (Time.timeScale == 0) return;
-        HP = HP < 0 ? 0 : HP - dmg;
+        HP = (HP - dmg) < 0 ? 0 : HP - dmg;
+        //HP = HP < 0 ? 0 : HP - dmg;
         healthBar.SetHealth(HP);
 
-        
+
         if (HP <= 0)
         {
-            if (!isDeathDisabled) gameController.GameOver(); //for debug menu
-            else
+            if (!isDeathDisabled) 
+            {
+                isGameOver = true;
+
+                if (isVampireForm)
+                {
+                    //disable vampire
+                    
+                    vampire.gameObject.SetActive(false);
+                    //put ash in the position of dracula- playerController.vampire.transform.position
+                    //draculaAsh.transform.position = vampire.transform.position;
+                    //enable ash and start animation
+                    draculaAsh.SetActive(true);
+                    //draculaAsh.transform.position = vampire.transform.position;
+
+                    //draculaAnimator.SetTrigger("Fried");
+                }
+                else
+                {
+                    bat.gameObject.SetActive(false);
+                    batAsh.SetActive(true);
+                }                                
+                runningOrFlyingAudioSrc.Stop();
+                gameController.timePassed.stopTime();                
+            }
+            else//for debug menu
             {
                 //   debugDeathCount++;
                 //   Debug.Log("Death by sun frying " + debugDeathCount);
@@ -262,6 +298,7 @@ public class PlayerController : MonoBehaviour
 
     public void addHP(float hp)
     {
+        if (isGameOver) return;
         if (Time.timeScale == 0) return;
         HP = HP > maxHP ? maxHP : HP + hp;
         healthBar.SetHealth(HP);
@@ -282,7 +319,28 @@ public class PlayerController : MonoBehaviour
     {
         if (hit.gameObject.CompareTag("Obstacle"))
         {
-            if (!isDeathDisabled) gameController.GameOver(); //for debug menu
+            if (!isDeathDisabled)
+            {
+                if (!isGameOver)    //isGameOver flag is needed now for animations, because the game is over before the GAME OVER screen and at the beginning of the animation
+                {
+                    //draculaAnimator.Get
+                    isGameOver = true;
+
+                    if (isVampireForm)
+                    {
+                        draculaAnimator.SetTrigger("Death");
+                    }
+                    else
+                    {
+                        batAnimator.SetTrigger("Collision");
+                    }
+                    HP = 0;
+                    healthBar.SetHealth(HP);
+                    runningOrFlyingAudioSrc.Stop();
+                    gameController.timePassed.stopTime();
+                }
+                //gameController.GameOver();
+            }//for debug menu
             else
             {
                 //   debugDeathCount++;

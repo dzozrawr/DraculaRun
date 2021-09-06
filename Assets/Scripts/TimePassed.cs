@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TimePassed : MonoBehaviour
 {
     private float time=0f;
+    private bool isTimeStopped = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,7 @@ public class TimePassed : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isTimeStopped) return;
         time += Time.deltaTime;
         gameObject.GetComponent<Text>().text = time.ToString("F")+" sec";
     }
@@ -22,5 +24,10 @@ public class TimePassed : MonoBehaviour
     public float getTime()
     {
         return time;
+    }
+
+    public  void stopTime()
+    {
+        isTimeStopped = true;
     }
 }

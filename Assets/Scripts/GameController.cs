@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour
                 Debug.Log("The high score is: " + highScore);
             }
         }
-
+    
         gameOverScreen.Setup(time);
     }
 
