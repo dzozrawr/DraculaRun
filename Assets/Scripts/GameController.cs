@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
 {
 
     public GameOverScreen gameOverScreen;
+    public HighScoreScreen highScoreScreen;
     public TimePassed timePassed;
     public DebugScreen debugScreen;
 
@@ -56,10 +57,10 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         float time = timePassed.GetComponent<TimePassed>().getTime();
 
-        if (time > highScore)
+        if (time > highScore)       //if the score is better than previous high score, save the new high score
         {
             highScore = time;
             SaveData sd = new SaveData();
@@ -70,9 +71,13 @@ public class GameController : MonoBehaviour
                 Debug.Log("Save succesful");
                 Debug.Log("The high score is: " + highScore);
             }
+            highScoreScreen.Setup(time);
+        }
+        else
+        {
+            gameOverScreen.Setup(time, highScore);
         }
     
-        gameOverScreen.Setup(time);
     }
 
     public void DebugMenu()
