@@ -48,7 +48,7 @@ public class SpawnTile : MonoBehaviour
             Instantiate(nextTile, spawnPos, Quaternion.Euler(0, 0, 0));
             previousTilePosition = spawnPos;
             tileLength = nextTile.GetComponent<Renderer>().bounds.size.z;
-            Debug.Log(nextTile.name);
+         //   Debug.Log(nextTile.name);
 
             tilesSpawned++;
             if (tilesSpawned == tilesToSpawnToIncreaseDifficulty)
@@ -56,7 +56,7 @@ public class SpawnTile : MonoBehaviour
                 tilesSpawned = 0;
                 if(difficultyIndexOffset< difficultyIndexCeiling)//increase difficulty
                 {
-                    Debug.Log("Difficulty increased");
+                  //  Debug.Log("Difficulty increased");
                     difficultyIndexOffset++;
                 }
                 

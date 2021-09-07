@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
         int n_runs=PlayerPrefs.GetInt("numberOfGameSceneLoads");
         if (n_runs == 0)
         {
-            tutorialUIElements.SetActive(true);
+            tutorialUIElements.SetActive(true); //tutorial is disabled, it is enabled only on the first run and then disabled in the next runs by default (through the editor)
             PlayerPrefs.SetInt("numberOfGameSceneLoads", 1);
         }
 
@@ -33,13 +33,13 @@ public class GameController : MonoBehaviour
             sd.LoadFromJson(json);
 
             highScore = sd.highScore;
-            Debug.Log("Load complete");
+           // Debug.Log("Load complete");
         }
         else
         {
             highScore = 0f;
         }
-        Debug.Log("The high score is: " + highScore);
+       // Debug.Log("The high score is: " + highScore);
     }
 
     private void Update()
