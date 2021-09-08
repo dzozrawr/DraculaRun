@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2473151113238388204}
   m_Layer: 0
   m_Name: Gate2wHitbox
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,8 +63,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2557039924376705153, guid: 5fe014ed6f0738146a03e6216f77369f, type: 3}
-  - {fileID: -4331557693793366970, guid: 5fe014ed6f0738146a03e6216f77369f, type: 3}
+  - {fileID: 2100000, guid: 04519b532e7a0ae4c844c6224f3f1602, type: 2}
+  - {fileID: 2100000, guid: 4432a56c1450ad642b2be5b84710d9ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

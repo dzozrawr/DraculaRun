@@ -24,6 +24,7 @@ public class HighScoreScreen : MonoBehaviour
         rightConfetti.GetComponent<ParticleSystem>().Play();
         topConfetti.GetComponent<ParticleSystem>().Play();
 
+        SFXManager.PlaySound("victory");
     }
 
 

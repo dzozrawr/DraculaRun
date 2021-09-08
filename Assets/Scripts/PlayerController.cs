@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField] private GameObject draculaAsh, batAsh; //ash models for when the characters burn in the sun
-   // [SerializeField] private GameObject batAsh;
+    [SerializeField] private ParticleSystem draculaDeathSmoke, batDeathSmoke;
+    // [SerializeField] private GameObject batAsh;
 
     private bool isGameOver = false;
     private void Awake()
@@ -270,11 +271,14 @@ public class PlayerController : MonoBehaviour
                 if (isVampireForm)
                 {
                     //disable vampire
-                    
-                    vampire.gameObject.SetActive(false);
+
+
                     //put ash in the position of dracula- playerController.vampire.transform.position
                     //draculaAsh.transform.position = vampire.transform.position;
                     //enable ash and start animation
+
+                    vampire.gameObject.SetActive(false);
+                    draculaDeathSmoke.Play();
                     draculaAsh.SetActive(true);
                     //draculaAsh.transform.position = vampire.transform.position;
 
@@ -283,6 +287,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     bat.gameObject.SetActive(false);
+                    batDeathSmoke.Play();
                     batAsh.SetActive(true);
                 }                                
                 runningOrFlyingAudioSrc.Stop();
@@ -348,6 +353,11 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+    }
+
+    public bool is_gameOver()   //maybe should be in GameController, but the variable isGameOver is used frequently in PlayerController
+    {
+        return isGameOver;
     }
 
 }

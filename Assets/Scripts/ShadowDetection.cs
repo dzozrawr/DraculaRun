@@ -13,6 +13,7 @@ public class ShadowDetection : MonoBehaviour
     private bool hit; //rayCast variable
     public GameObject healthBarGlow;    //the health bar glows when the player is in the sun
 
+    [SerializeField] private ParticleSystem draculaSmoke, batSmoke;
 
     // private AudioSource sizzlingAudioSrc; //sizzling while in the sunlight was here previously
 
@@ -28,18 +29,24 @@ public class ShadowDetection : MonoBehaviour
     {
         playerController = gameObject.GetComponent<PlayerController>();
         healthBarGlow.SetActive(false);
-       // sizzlingAudioSrc = gameObject.GetComponent<AudioSource>();
+        // sizzlingAudioSrc = gameObject.GetComponent<AudioSource>();
     }
 
 
     void Update()
     {
+        if (playerController.is_gameOver())
+        {
+            if (draculaSmoke.isPlaying) draculaSmoke.Stop();
+            if (batSmoke.isPlaying) batSmoke.Stop();
+        }
+
         if (Time.timeScale == 0)  //if paused do nothing
         {
             //if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
             return;
         }
-       
+
 
         if (playerController.IsVampireForm)
         {
@@ -58,20 +65,37 @@ public class ShadowDetection : MonoBehaviour
                 playerController.getPlayerUmbrella().SetActive(true);
                 playerController.getPlayerUmbrella().GetComponent<UmbrellaHP>().doDamage(damagePerSecond * Time.deltaTime); //do damage to umbrella
                 healthBarGlow.SetActive(false);
-               // if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
+                // if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
             }
             else
             {
+                if (playerController.IsVampireForm)
+                {
+                    if (!draculaSmoke.isPlaying) draculaSmoke.Play()
+                  ;
+                }
+                else
+                {
+                    if (!batSmoke.isPlaying) batSmoke.Play();
+                }  //play smoke particle effect that represents frying in the sun
                 playerController.doDamage(damagePerSecond * Time.deltaTime);  //taking damage from sunlight only if umbrella isnt available
                 healthBarGlow.SetActive(true);
-               // if (!sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Play();
+                // if (!sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Play();
             }
         }
         else    //if the player is in the shadow
         {
+            if (playerController.IsVampireForm)
+            {
+                if (draculaSmoke.isPlaying) draculaSmoke.Stop();
+            }
+            else
+            {
+                if (batSmoke.isPlaying) batSmoke.Stop();
+            }
             healthBarGlow.SetActive(false);
-           // if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
-                playerController.addHP(healthRegenPerSecond * Time.deltaTime);  //regenerating hp in the shadow
+            // if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
+            playerController.addHP(healthRegenPerSecond * Time.deltaTime);  //regenerating hp in the shadow
             if (playerController.IsUmbrellaAvailable)
             {
                 playerController.getPlayerUmbrella().SetActive(false);
