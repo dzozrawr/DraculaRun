@@ -32,7 +32,7 @@ public class FileManager
         }
         catch(FileNotFoundException f)
         {
-            Debug.Log($"The file {fullPath} doesn't exist");
+            Debug.Log($"The file {fullPath} doesn't exist, exception: {f}");
             result = "";
             return false;
         }

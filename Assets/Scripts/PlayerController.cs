@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void deepCopyCharacterController(GameObject o)
+    private void deepCopyCharacterController(GameObject o)  //copies values of another character controller to the main character controller (bat to vampire and vice versa)
     {
         cc = o.GetComponent<CharacterController>();
         myCharacterController.slopeLimit = cc.slopeLimit;
@@ -210,15 +210,12 @@ public class PlayerController : MonoBehaviour
                 {
                     if (transform.localEulerAngles.y > 180 && touch.deltaPosition.x > 0)    //speed up the manual unrotation from left to right
                     {
-                        rotationComplete *= manualUnrotateMultiplier;
-                        // rotationComplete = (transform.localEulerAngles.y + (rotationComplete * manualUnrotateMultiplier)) > 360 ? rotationComplete = 360- transform.localEulerAngles.y : rotationComplete *= manualUnrotateMultiplier;
+                        rotationComplete *= manualUnrotateMultiplier;                       
                     }
 
                     if (transform.localEulerAngles.y != 0 && transform.localEulerAngles.y < 180 && touch.deltaPosition.x < 0) //speed up the manual unrotation from right to left
                     {
                         rotationComplete *= manualUnrotateMultiplier;
-                        // rotationComplete = (transform.localEulerAngles.y - (rotationComplete * manualUnrotateMultiplier)) < 0 ? rotationComplete = transform.localEulerAngles.y : rotationComplete *= manualUnrotateMultiplier;
-
                     }
 
                     transform.Rotate(0, rotationComplete, 0);   //rotates the player if not exceeding turnAngleLimit, otherwise snaps to turnAngleLimit
@@ -258,7 +255,6 @@ public class PlayerController : MonoBehaviour
         if (isGameOver) return;
         if (Time.timeScale == 0) return;
         HP = (HP - dmg) < 0 ? 0 : HP - dmg;
-        //HP = HP < 0 ? 0 : HP - dmg;
         healthBar.SetHealth(HP);
 
 
@@ -270,19 +266,10 @@ public class PlayerController : MonoBehaviour
 
                 if (isVampireForm)
                 {
-                    //disable vampire
+                    vampire.gameObject.SetActive(false);    //disable vampire
+                    draculaDeathSmoke.Play();   //play smoke particles
+                    draculaAsh.SetActive(true); //enable ash and animation starts automatically
 
-
-                    //put ash in the position of dracula- playerController.vampire.transform.position
-                    //draculaAsh.transform.position = vampire.transform.position;
-                    //enable ash and start animation
-
-                    vampire.gameObject.SetActive(false);
-                    draculaDeathSmoke.Play();
-                    draculaAsh.SetActive(true);
-                    //draculaAsh.transform.position = vampire.transform.position;
-
-                    //draculaAnimator.SetTrigger("Fried");
                 }
                 else
                 {
@@ -344,7 +331,6 @@ public class PlayerController : MonoBehaviour
                     runningOrFlyingAudioSrc.Stop();
                     gameController.timePassed.stopTime();
                 }
-                //gameController.GameOver();
             }//for debug menu
             else
             {

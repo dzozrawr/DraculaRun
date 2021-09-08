@@ -24,14 +24,16 @@ public class HighScoreScreen : MonoBehaviour
         rightConfetti.GetComponent<ParticleSystem>().Play();
         topConfetti.GetComponent<ParticleSystem>().Play();
 
+        SoundManagerScript.backgroundAudioSrc.Stop();
         SFXManager.PlaySound("victory");
+
     }
 
 
     public void RestartButton()
     {
 
-        //  GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().addHP(100); //added this, because otherwise the HP is 0 in the beginning and the game pauses
+
         SceneManager.LoadScene("Game");
 
     }
@@ -39,14 +41,10 @@ public class HighScoreScreen : MonoBehaviour
     public void QuitButton()
     {
 
-        //  GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().addHP(100); //added this, because otherwise the HP is 0 in the beginning and the game pauses
+
         Application.Quit();
 
     }
 
-    public void MainMenuButton()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
 
 }

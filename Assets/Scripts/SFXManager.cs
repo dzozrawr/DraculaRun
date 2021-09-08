@@ -27,7 +27,7 @@ public class SFXManager : MonoBehaviour     //class made, because additional sou
                 audioSrc.PlayOneShot(umbrellaPickupSound, 0.5f);
                 break;
             case "victory":
-                audioSrc.PlayOneShot(victorySound);
+                audioSrc.PlayOneShot(victorySound, 0.8f);
                 break;
         }
     }

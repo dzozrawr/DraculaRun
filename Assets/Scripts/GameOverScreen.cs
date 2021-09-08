@@ -18,7 +18,6 @@ public class GameOverScreen : MonoBehaviour
     public void RestartButton()
     {
      
-      //  GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().addHP(100); //added this, because otherwise the HP is 0 in the beginning and the game pauses
         SceneManager.LoadScene("Game");
         
     }

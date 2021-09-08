@@ -29,7 +29,6 @@ public class ShadowDetection : MonoBehaviour
     {
         playerController = gameObject.GetComponent<PlayerController>();
         healthBarGlow.SetActive(false);
-        // sizzlingAudioSrc = gameObject.GetComponent<AudioSource>();
     }
 
 
@@ -38,12 +37,12 @@ public class ShadowDetection : MonoBehaviour
         if (playerController.is_gameOver())
         {
             if (draculaSmoke.isPlaying) draculaSmoke.Stop();
-            if (batSmoke.isPlaying) batSmoke.Stop();
+            if (batSmoke.isPlaying) batSmoke.Stop();            //this is to prevent smoke playing during the death animations
         }
 
         if (Time.timeScale == 0)  //if paused do nothing
         {
-            //if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
+           
             return;
         }
 
@@ -60,41 +59,37 @@ public class ShadowDetection : MonoBehaviour
 
         if (!hit)   //if the player is in the sunlight
         {
-            if (playerController.IsUmbrellaAvailable)
+            if (playerController.IsUmbrellaAvailable)   //if the player is hit by sunlight and has an umbrella
             {
                 playerController.getPlayerUmbrella().SetActive(true);
                 playerController.getPlayerUmbrella().GetComponent<UmbrellaHP>().doDamage(damagePerSecond * Time.deltaTime); //do damage to umbrella
                 healthBarGlow.SetActive(false);
-                // if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
+
+                if (draculaSmoke.isPlaying) draculaSmoke.Stop();
+                if (batSmoke.isPlaying) batSmoke.Stop();
+
             }
-            else
+            else     //taking damage from sunlight only if umbrella isnt available
             {
                 if (playerController.IsVampireForm)
                 {
-                    if (!draculaSmoke.isPlaying) draculaSmoke.Play()
-                  ;
+                    if (!draculaSmoke.isPlaying) draculaSmoke.Play();//play smoke particle effect that represents frying in the sun
                 }
                 else
                 {
-                    if (!batSmoke.isPlaying) batSmoke.Play();
-                }  //play smoke particle effect that represents frying in the sun
-                playerController.doDamage(damagePerSecond * Time.deltaTime);  //taking damage from sunlight only if umbrella isnt available
+                    if (!batSmoke.isPlaying) batSmoke.Play();//play smoke particle effect that represents frying in the sun
+                }
+                playerController.doDamage(damagePerSecond * Time.deltaTime);
                 healthBarGlow.SetActive(true);
-                // if (!sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Play();
+          
             }
         }
         else    //if the player is in the shadow
         {
-            if (playerController.IsVampireForm)
-            {
-                if (draculaSmoke.isPlaying) draculaSmoke.Stop();
-            }
-            else
-            {
-                if (batSmoke.isPlaying) batSmoke.Stop();
-            }
+            if (draculaSmoke.isPlaying) draculaSmoke.Stop();
+            if (batSmoke.isPlaying) batSmoke.Stop();
+
             healthBarGlow.SetActive(false);
-            // if (sizzlingAudioSrc.isPlaying) sizzlingAudioSrc.Stop();
             playerController.addHP(healthRegenPerSecond * Time.deltaTime);  //regenerating hp in the shadow
             if (playerController.IsUmbrellaAvailable)
             {

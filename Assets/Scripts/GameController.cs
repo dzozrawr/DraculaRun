@@ -99,8 +99,8 @@ public class GameController : MonoBehaviour
 
             if (FileManager.WriteToFile("HighScore.dat",sd.ToJson()))
             {
-                Debug.Log("Save succesful");
-                Debug.Log("The high score is: " + highScore);
+               // Debug.Log("Save succesful");
+               // Debug.Log("The high score is: " + highScore);
             }
             highScoreScreen.Setup(time);
         }
